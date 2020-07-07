@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="207px" height="205px" viewBox="0 0 207 205" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 59.1 (86144) - https://sketch.com -->
+    <title>logo/full</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="0 0.764553691 206.131592 0.764553691 206.131592 204.38888 0 204.38888"></polygon>
+    </defs>
+    <g id="Register" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Login" transform="translate(-1052.000000, -308.000000)">
+            <g id="logo/bubble" transform="translate(1052.000000, 308.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g id="Clip-13"></g>
+                <path d="M13.4728491,0.764553691 C6.06175329,0.764553691 -0.000743712575,7.49378188 -0.000743712575,15.718547 L-0.000743712575,142.83093 C-0.000743712575,151.055695 6.06175329,157.784923 13.4728491,157.784923 L144.158023,157.784923 C151.567879,157.784923 161.91664,162.542574 167.156095,168.359621 L196.604634,201.046802 C201.844089,206.862473 206.131592,204.890896 206.131592,196.666131 L206.131592,172.738916 L206.131592,155.542305 L206.131592,138.344319 L206.131592,15.718547 C206.131592,7.49378188 200.069095,0.764553691 192.659238,0.764553691 L13.4728491,0.764553691 Z" id="Fill-12" fill="#FFFFFF" fill-rule="evenodd" mask="url(#mask-2)"></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+h1{
+    @apply text-3xl font-bold;
+}
+
+h2{
+    @apply text-2xl font-bold;
+}
+
+h3{
+    @apply text-xl font-bold;
+}
+
+.btn{
+    @apply rounded border px-2 py-1 flex items-center;
+    
+}
+
+/* .btn:focus{
+    outline: none;
+    box-shadow: 0px 0px 8px 0px rgba(98, 46, 200, 0.80);
+} */
+
+.btn-lg{
+    @apply text-xl font-bold;
+}
+
+
+@each $color in primary,secondary{
+    .btn-$(color){
+        @apply text-white bg-$(color)-500 border-$(color)-500 transition-colors duration-100 ease-out;
+    }
+    .btn-$(color):hover{
+        @apply bg-$(color)-400 border-$(color)-400;
+    }
+
+    .btn-$(color):disabled{
+        @apply opacity-50 cursor-default;
+    }
+}
