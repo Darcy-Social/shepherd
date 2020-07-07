@@ -2,8 +2,8 @@
   <div class="flex flex-row login">
     <div class="w-1/2 flex flex-col items-center justify-center p-4">
       <div class="w-full">
-        <FormGroup type="text" label="Email" v-model="email" class="my-4" />
-        <FormGroup type="password" label="Password" v-model="password" class="my-4" />
+        <!-- <FormGroup type="text" label="Email" v-model="email" class="my-4" />
+        <FormGroup type="password" label="Password" v-model="password" class="my-4" /> -->
 
         <button class="btn btn-primary my-4" @click="login()">Log in</button>
       </div>
@@ -23,14 +23,14 @@
 </template>
 
 <script>
-import FormGroup from "../components/FormGroup";
+//import FormGroup from "../components/FormGroup";
 
 const auth = require("solid-auth-client");
 
 export default {
   name: "loginView",
   components: {
-    FormGroup
+    //FormGroup
   },
   data: () => ({
     email: "",
@@ -39,7 +39,9 @@ export default {
   methods: {
     async login() {
       const session = await auth.currentSession();
-      if (!session) await auth.login("https://darcypod.com:8443");
+      if (!session) await auth.login("https://darcypod.com:8443",{
+        callbackUri:"https://ibex.darcy.is"
+      });
       else alert(`Logged in as ${session.webId}`);
     }
   },
