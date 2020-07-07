@@ -27,7 +27,7 @@ export default {
       const session = await auth.currentSession();
       if (!session)
         await auth.login("https://darcypod.com:8443", {
-          callbackUri: "http://localhost:8081"
+          callbackUri: "http://ibex.darcy.is"
         });
       else alert(`Logged in as ${session.webId}`);
     },
