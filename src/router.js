@@ -5,6 +5,7 @@ import Home from './views/Home.vue'
 import Register from './views/Register.vue'
 import AccountType from './views/signup/AccountType'
 import AccountSettings from './views/signup/AccountSettings'
+import Feed from './views/Feed.vue'
 
 Vue.use(Router)
 
@@ -32,6 +33,11 @@ export default new Router({
       path:"/register/account-settings",
       name:"accountSettings",
       component: AccountSettings
+    },
+    {
+      path:"/feed",
+      name:"feed",
+      component: Feed
     }
   ]
 })

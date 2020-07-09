@@ -9,6 +9,7 @@
         <FormGroup type="password" label="Confirm Password" v-model="passwordConfirm" class="my-4" />
 
         <button class="btn btn-primary my-4" @click="signup()">Continue</button>
+        <button class="btn btn-secondary inline-block" @click="back()">Cancel</button>
       </div>
     </div>
     <div
@@ -50,6 +51,7 @@ export default {
   methods: {
     signup() {
       console.log("sent");
+
       axios({
         method: "POST",
         url: "https://darcypod.com:8443/api/accounts/new",
@@ -66,13 +68,22 @@ export default {
         console.log("account created")
         console.log(res);
         //TODO get token 
-        this.$router.push("/register/account-type")
+        this.$router.push("/")
+      })
+      .then((res) => {
+        console.log("account created")
+        console.log(res);
+        //TODO get token 
+        this.$router.push("/")
       })
       .catch((err) => {
         console.log(err)
       });
 
       
+    },
+    back(){
+      this.$router.push("/")
     }
   },
   created() {}

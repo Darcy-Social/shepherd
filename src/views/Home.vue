@@ -27,7 +27,7 @@ export default {
       const session = await auth.currentSession();
       if (!session)
         await auth.login("https://darcypod.com:8443", {
-          callbackUri: "http://ibex.darcy.is"
+          callbackUri: "https://shepherd.darcy.is/"
         });
       else alert(`Logged in as ${session.webId}`);
     },
@@ -35,8 +35,19 @@ export default {
       let session = await auth.currentSession();
       let popupUri = "https://solid.community/common/popup.html";
       if (!session) session = await auth.popupLogin({ popupUri });
-      alert(`Logged in as ${session.webId}`);
-    }
+      this.$router.push("/feed");
+    },
+    async checkSession() {
+      let session = await auth.currentSession();
+
+      if(session){
+        this.$router.push("/feed");
+      }
+      
+    },
+  },
+  created(){
+    this.checkSession();
   }
 };
 </script>
