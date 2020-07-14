@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 import Home from './views/Home.vue'
 import Register from './views/Register.vue'
+import RegisterSuccess from './views/signup/RegisterSuccess.vue'
 import AccountType from './views/signup/AccountType'
 import AccountSettings from './views/signup/AccountSettings'
 import Feed from './views/Feed.vue'
@@ -28,6 +29,11 @@ export default new Router({
       path: "/register/account-type",
       name: "accountType",
       component: AccountType,
+    },
+    {
+      path: "/register/success",
+      name: "registerSuccess",
+      component: RegisterSuccess,
     },
     {
       path:"/register/account-settings",

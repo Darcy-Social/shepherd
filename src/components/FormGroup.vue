@@ -1,7 +1,6 @@
 <template>
   <div class="form-group text-left">
       <label v-if="label.length" :for="id" class="text-sm text-gray-700 dark-mode:text-gray-400" v-html="label"></label>
-
       <div 
       class="input-group border rounded shadow-sm flex flex-row  bg-white dark-mode:bg-transparent " 
       :class="{'px-2 py-1':(type!='color'),borderClass}"
@@ -52,14 +51,7 @@
       </div>
 
        <div class="text-danger-500 flex flex-row items-center mt-1" v-if="Object.keys(this.fieldError).length !== 0">
-
-          <feather 
-            type="alert-triangle" 
-            class="mr-2"
-            size="18"
-          ></feather>
-          
-          {{fieldError.message}}
+          <span v-html="fieldError.message"></span>
       </div>
 
      

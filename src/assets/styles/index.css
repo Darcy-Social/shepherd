@@ -39,5 +39,6 @@ h3{
 
     .btn-$(color):disabled{
         @apply opacity-50 cursor-default;
+        pointer-events: none;
     }
 }
