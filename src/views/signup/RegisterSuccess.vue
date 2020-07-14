@@ -3,7 +3,7 @@
     <div class="w-1/2 flex flex-col justify-center items-start px-4">
       <h1>The account has been created with success!</h1>
 
-      <a href="https://darcypod.com:8443/login" class="btn btn-lg btn-primary mt-4">Login now</a>
+      <button @click="login()" class="btn btn-lg btn-primary mt-4">Login now</button>
     </div>
     <div
       class="w-1/2 skewed text-white text-center flex flex-col justify-center items-center bg-no-repeat bg-contain bg-right"
@@ -16,11 +16,25 @@
 </template>
 
 <script>
+
+const auth = require("solid-auth-client");
+
+
 export default {
   name: "registerSuccess",
   data: () => ({
     ok: "2"
-  })
+  }),
+  methods:{
+    async login() {
+      const session = await auth.currentSession();
+      if (!session)
+        await auth.login("https://darcypod.com:8443", {
+          callbackUri: "https://shepherd.darcy.is/"
+        });
+      else alert(`Logged in as ${session.webId}`);
+    },
+  }
 };
 </script>
 
