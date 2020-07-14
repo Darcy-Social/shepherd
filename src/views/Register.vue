@@ -113,8 +113,10 @@ export default {
             //get the alert element
             const alerts = htmlDoc.getElementsByClassName("alert-danger");
             if(alerts.length){
-              if(typeof alerts[0]!=='undefined')
+              if(typeof alerts[0]!=='undefined'){
                 this.errorMessage = alerts[0].innerHTML;
+                this.loading = true;
+              }
             }
           
           }else if(res.status==0){ //creation successful
