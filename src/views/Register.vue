@@ -151,7 +151,8 @@ export default {
   height: 100vh;
 }
 .skewed {
-  background: no-repeat contain;
+  background-repeat: no-repeat;
+  background-size: cover;
   padding-left: 10%;
 }
 </style>
