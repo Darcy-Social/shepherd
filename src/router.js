@@ -8,6 +8,15 @@ import AccountType from './views/signup/AccountType'
 import AccountSettings from './views/signup/AccountSettings'
 import Feed from './views/Feed.vue'
 
+import Permissions from './views/signup/Permissions.vue'
+import PermissionsSuccess from './views/signup/PermissionsSuccess';
+import PermissionsErrors from './views/signup/PermissionsErrors';
+import FeedsExplanation from './views/signup/FeedsExplanation';
+import FeedsCreation from './views/signup/FeedsCreation';
+import OnboardingProfile from './views/signup/Profile';
+import OnboardingSuccess from './views/signup/Success';
+
+
 Vue.use(Router)
 
 export default new Router({
@@ -44,6 +53,36 @@ export default new Router({
       path:"/feed",
       name:"feed",
       component: Feed
+    },
+    {
+      path:"/onboarding/permissions",
+      name:"onboardingPermissions",
+      component: Permissions
+    },{
+      path:"/onboarding/permissions/success",
+      name:"onboardingPermissionsSuccess",
+      component:PermissionsSuccess,
+    },{
+      path:"/onboarding/permissions/errors",
+      name:"onboardingPermissionsErrors",
+      component:PermissionsErrors,
+    },{
+      path:"/onboarding/feeds/",
+      name:"onboardingFeeds",
+      component: FeedsExplanation,
+    },{
+      path:"/onboarding/feeds/new",
+      name:"onboardinFeedCreation",
+      component: FeedsCreation,
+    },{
+      path:"/onboarding/profile",
+      name:"onboardingProfile",
+      component: OnboardingProfile,
+    },
+    {
+      path:"/onboarding/success",
+      name:"onboardingSuccess",
+      component: OnboardingSuccess,
     }
   ]
 })

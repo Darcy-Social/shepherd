@@ -15,7 +15,7 @@ h3{
 }
 
 .btn{
-    @apply rounded border px-2 py-1 flex items-center;
+    @apply rounded-full border px-6 py-2 flex items-center;
     
 }
 
@@ -29,7 +29,7 @@ h3{
 }
 
 
-@each $color in primary,secondary{
+@each $color in primary,secondary,green,orange{
     .btn-$(color){
         @apply text-white bg-$(color)-500 border-$(color)-500 transition-colors duration-100 ease-out;
     }

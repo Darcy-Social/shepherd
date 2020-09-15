@@ -13,6 +13,8 @@
 
       <router-link to="/register" class="btn btn-lg btn-primary mt-4">Create and account</router-link>
     </div>
+
+   
   </div>
 </template>
 
@@ -27,7 +29,7 @@ export default {
       const session = await auth.currentSession();
       if (!session)
         await auth.login("https://darcypod.com:8443", {
-          callbackUri: "https://shepherd.darcy.is/"
+          callbackUri: process.env.VUE_APP_ROOT_URL
         });
       else alert(`Logged in as ${session.webId}`);
     },

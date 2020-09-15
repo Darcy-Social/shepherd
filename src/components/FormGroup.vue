@@ -4,9 +4,8 @@
       <div 
       class="input-group border rounded shadow-sm flex flex-row  bg-white dark-mode:bg-transparent " 
       :class="{'px-2 py-1':(type!='color'),borderClass}"
-      :style="{backgroundColor:(type=='color'?value:'')}">
-
-
+      :style="{backgroundColor:(type=='color'?value:'')}"
+      >
             <input 
                 @input="$emit('input', $event.target.value)"
                 v-if="type=='text'||type=='password'||type=='file'" class="block w-full dark-mode:bg-transparent" 
@@ -19,9 +18,8 @@
 
                   <input 
                     v-if="type=='color'"
-                    @input="$emit('input', $event.target.value)"
+                    @input="$emit('input',$event.target.value)"
                     class="block w-full h-8 rounded border-none opacity-0 cursor-pointer" 
-                    :style="{backgroundColor:value}"
                     type="color" 
                     :name="name" 
                     :id="id" 
@@ -39,7 +37,7 @@
                 :id="id" 
                 :placeholder="placeholder"
                 :value="value"
-                rows="1"
+                rows="2"
                
                style="resize:none;" 
             ></textarea>
