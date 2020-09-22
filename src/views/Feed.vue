@@ -1,21 +1,38 @@
 <template>
-  <div class="p-2 relative text-center mt-2 ml-2 inline-block bg-primary-200 rounded-md">
-    <h2>Logged in as {{webid}}</h2>
-    <button class="btn btn-primary mt-4" @click="logout()">Log Out</button>
+  
+  <div>
+
+    <Sidebar />
+
+    <main class="main">
+          <h2>Welcome to your feed: {{webid}}</h2>
+         
+          <button class="btn btn-primary" @click="makePost()">Make Post</button>
+    </main>
+
   </div>
 </template>
 
 <script>
 const auth = require("solid-auth-client");
 
-import { Ibex, log } from "../ibex.js";
+import { Ibex } from "../ibex.js";
+
+import Sidebar from '../components/Sidebar';
 
 export default {
+  components:{
+    Sidebar
+  },
   data: () => ({
     session: {},
     webid: "",
-    ibex: "",
   }),
+  computed: {
+    ibex() {
+      return this.$store.state.ibex;
+    },
+  },
   methods: {
     async checkSession() {
       console.log("checking session");
@@ -25,32 +42,41 @@ export default {
         this.session = session;
         this.webid = session.webId;
 
+        this.$store.state.session = session;
         this.$store.state.ibex = new Ibex(session.webId);
         this.checkPreferences();
       }
     },
-    logout() {
-      let vm = this;
-      auth.logout().then(() => {
-        vm.session = {};
-        vm.webid = "";
-        vm.$router.push("/");
-      });
+   
+    checkPreferences(){
+     console.log("checking preferences");
+     this.ibex.loadSettings()
+     .then(res=>{
+        this.$store.state.settings = res;
+     })
+     .catch(err=>{
+       //Config file not found, perform onboarding
+       if(err.status==404){
+         this.$router.push("/onboarding/permissions");
+       }
+     });
+
     },
 
-    checkPreferences(){
-
-      // this.ibex.getText(this.ibex.root+"/preferences.json")
-      // .then(res=>{
-      //   console.log(res)
-      // })
-      // .catch(err=>{
-      //   console.log(err)
-      // })
-
-      //for now just push to check
-      this.$router.push("/onboarding/permissions");
-    }
+    makePost() {
+      this.ibex
+        .createPost("Test Post", "cats")
+        .then((res) => {
+          console.log(res);
+          this.postUrl = res.url;
+          this.nextTest();
+        })
+        .catch((err) => {
+          this.errors.push(err);
+          console.log(err);
+        });
+    },
+    
   },
   created() {
     this.checkSession();
@@ -60,4 +86,5 @@ export default {
 </script>
 
 <style>
+
 </style>

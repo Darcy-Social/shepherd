@@ -1,6 +1,5 @@
 <template class="">
   <div class="bg-primary-200 flex flex-row items-center justify-center" style="height:100vh">
-    <button @click="startTests()">Start</button>
     <div class="flex flex-col items-center w-full">
       <img src="@/assets/img/permissions-blob.svg" style="width:55%" alt="Darcy Logo" />
       <h1 class="mb-2">Checking you permissions</h1>
@@ -186,8 +185,7 @@ export default {
       },
     ];
 
-    //this.startTests()
-    //this.makeFeed()
+    this.startTests()
   },
 };
 </script>

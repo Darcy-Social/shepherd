@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body{
+    background-color: #EDF0F1;
+}
+
 h1{
     @apply text-3xl font-bold;
 }
@@ -42,3 +46,9 @@ h3{
         pointer-events: none;
     }
 }
+
+main.main{
+    width:calc(100vw - 6rem);
+    @apply ml-24;
+    @apply mt-2;
+  }

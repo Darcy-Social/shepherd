@@ -4,8 +4,6 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Register from './views/Register.vue'
 import RegisterSuccess from './views/signup/RegisterSuccess.vue'
-import AccountType from './views/signup/AccountType'
-import AccountSettings from './views/signup/AccountSettings'
 import Feed from './views/Feed.vue'
 
 import Permissions from './views/signup/Permissions.vue'
@@ -16,6 +14,8 @@ import FeedsCreation from './views/signup/FeedsCreation';
 import OnboardingProfile from './views/signup/Profile';
 import OnboardingSuccess from './views/signup/Success';
 
+import Following from './views/Following';
+import User from './views/User';
 
 Vue.use(Router)
 
@@ -35,19 +35,9 @@ export default new Router({
       component: Register
     },
     {
-      path: "/register/account-type",
-      name: "accountType",
-      component: AccountType,
-    },
-    {
       path: "/register/success",
       name: "registerSuccess",
       component: RegisterSuccess,
-    },
-    {
-      path:"/register/account-settings",
-      name:"accountSettings",
-      component: AccountSettings
     },
     {
       path:"/feed",
@@ -83,6 +73,17 @@ export default new Router({
       path:"/onboarding/success",
       name:"onboardingSuccess",
       component: OnboardingSuccess,
+    },
+
+    {
+      path:"/following",
+      name:"following",
+      component:Following,
+    },
+    {
+      path:"/user",
+      name:"user",
+      component:User,
     }
   ]
 })

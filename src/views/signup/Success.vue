@@ -4,7 +4,7 @@
       <img src="@/assets/img/onboarding-success-person.svg" style="width:55%" alt="Darcy Logo" />
       <h1 class="mb-2">We're done</h1>
       <h2 class="mb-2">Now you can start to use Darcy!</h2>
-      <button class="btn btn-primary">Let's Go!</button>
+      <router-link to="/feed" class="btn btn-primary">Let's Go!</router-link>
     </div>
   </div>
 </template>

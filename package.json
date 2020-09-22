@@ -20,7 +20,9 @@
     "solid-auth-client": "^2.5.1",
     "tailwindcss": "^1.8.10",
     "vue": "^2.6.12",
+    "vue-inline-svg": "^2.0.0",
     "vue-router": "^3.4.3",
+    "vue-template-compiler": "^2.6.12",
     "vuex": "^3.5.1"
   },
   "devDependencies": {
@@ -34,7 +36,6 @@
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
     "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.0.0",
-    "vue-template-compiler": "^2.6.12"
+    "eslint-plugin-vue": "^5.0.0"
   }
 }
