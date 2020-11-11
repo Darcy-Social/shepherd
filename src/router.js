@@ -16,6 +16,9 @@ import OnboardingSuccess from './views/signup/Success';
 
 import Following from './views/Following';
 import User from './views/User';
+import Settings from './views/Settings';
+import SinglePost from './views/SinglePost';
+import Profile from './views/Profile';
 
 Vue.use(Router)
 
@@ -43,6 +46,11 @@ export default new Router({
       path:"/feed",
       name:"feed",
       component: Feed
+    },
+    {
+      path:"/profile",
+      name:"profile",
+      component:Profile,
     },
     {
       path:"/onboarding/permissions",
@@ -84,6 +92,15 @@ export default new Router({
       path:"/user",
       name:"user",
       component:User,
+    },
+    {
+      path:"/settings",
+      name:"settings",
+      component:Settings
+    },{
+      path:"/post/",
+      name:"postView",
+      component:SinglePost,
     }
   ]
 })

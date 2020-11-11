@@ -17,8 +17,8 @@
 
       <div
       v-if="type!='toggle'" 
-      class="input-group border rounded-full shadow-sm flex flex-row  bg-white dark-mode:bg-transparent " 
-      :class="{'px-2 py-1':(type!='color'),borderClass}"
+      class="input-group border shadow-sm flex flex-row  bg-white dark-mode:bg-transparent " 
+      :class="{'px-2 py-1':(type!='color'),borderClass,'rounded-full':type!='textarea','rounded-md':type=='textarea'}"
       :style="{backgroundColor:(type=='color'?value:'')}"
       >
             <input 
@@ -52,7 +52,7 @@
                 :id="id" 
                 :placeholder="placeholder"
                 :value="value"
-                rows="2"
+                :rows="rows"
                
                style="resize:none;" 
             ></textarea>
@@ -101,6 +101,10 @@ export default {
       type: String
     },
     placeholder: String,
+    rows:{
+      type:Number,
+      default:2
+    },
     options: {
       default: () => [],
       type: Array
@@ -125,6 +129,7 @@ export default {
       return 'border-'+this.statusClass+'-500'
     },
     sliderValue(){
+      return 0;
     }
   },
   methods:{
@@ -140,7 +145,6 @@ export default {
 .input-group:focus-within {
     @apply border;
     @apply border-primary-300;
-    @apply rounded-full;
     box-shadow: 0px 0px 6px 0px rgba(14, 146, 204, 0.75);
 }
 

@@ -6,13 +6,17 @@
 
     <nav class="flex flex-col">
       <router-link
-        class="py-4 px-1 my-2 text-white rounded-full bg-primary-400 hover:bg-primary-600"
+        class="py-4 px-1 my-2 rounded-full"
+        :class="{'bg-white text-primary-500 hover:bg-primary-100':$router.currentRoute.path==link.url,
+         'text-white bg-primary-400 hover:bg-primary-600':$router.currentRoute.path!=link.url
+        }"
         v-for="link in links"
         :key="link.url"
         :to="link.url"
         :title="link.name"
+        :aria-label="link.name"
       >
-        <inline-svg :aria-label="link.name" :src="require('@/assets/img/sidebar/'+link.icon)" />
+        <inline-svg aria-hidden="true" :src="require('@/assets/img/sidebar/'+link.icon)" />
       </router-link>
     </nav>
 

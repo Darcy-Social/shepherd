@@ -5,12 +5,58 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    ibex:""
+    ibex:"",
+    session:{},
+    settings:{},
+    publicFeeds:[],
+    selectedPost:"",
+    selectedUser:"",
+    usersCache:{},
   },
   mutations: {
+    setSettings(state,settings){
+      state.settings = settings;
+    },
+    setSession(state,session){
+      state.session = session;
+    },
 
+    setIbex(state,ibex){
+      state.ibex = ibex;
+    },
+    setPublicFeeds(state,feeds){
+      
+      let betterFeeds = [];
+
+      for(const key in feeds){
+
+        const data = key.split("/");
+
+        const pod = "https://"+data[2];
+        const name = decodeURIComponent(data[5]);
+
+        betterFeeds.push({
+            pod,
+            name,
+            url:key
+        });
+
+      }
+
+      state.publicFeeds = betterFeeds;
+    },
+    setSelectedPost(state,post){
+      state.selectedPost = post;
+    },
+    setSelectedUser(state,user){
+      state.selectedUser = user;
+    },
+    addUserToCache(state,user){
+      state.usersCache[user.url] = user;
+    }
+ 
   },
   actions: {
-
+  
   }
 })

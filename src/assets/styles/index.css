@@ -33,7 +33,7 @@ h3{
 }
 
 
-@each $color in primary,secondary,green,orange{
+@each $color in primary,secondary,green,orange,gray{
     .btn-$(color){
         @apply text-white bg-$(color)-500 border-$(color)-500 transition-colors duration-100 ease-out;
     }
@@ -51,4 +51,5 @@ main.main{
     width:calc(100vw - 6rem);
     @apply ml-24;
     @apply mt-2;
+    @apply pr-6;
   }

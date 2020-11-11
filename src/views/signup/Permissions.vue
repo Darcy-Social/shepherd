@@ -3,6 +3,10 @@
     <div class="flex flex-col items-center w-full">
       <img src="@/assets/img/permissions-blob.svg" style="width:55%" alt="Darcy Logo" />
       <h1 class="mb-2">Checking you permissions</h1>
+         <img
+          src="@/assets/img/loader.svg"
+          class="animate-spin mx-auto mb-3"
+        />
       <progressBar :value="currentIndex" min="0" :max="tests.length-1" />
       <span class="mt-2">{{currentTest.text}}</span>
     </div>
@@ -49,7 +53,7 @@ export default {
     },
     makePost() {
       this.ibex
-        .createPost("Test Post", "testFeed")
+        .createPost("Test Post", this.feedName)
         .then((res) => {
           console.log(res);
           this.postUrl = res.url;

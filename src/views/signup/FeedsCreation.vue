@@ -23,7 +23,15 @@
     <div class="flex flex-row justify-around items-end">
       <FormGroup type="text" label="name" v-model="name" class="mr-2 text-black" />
       <FormGroup type="color" label="color" v-model="color" class="mx-2" />
-      <button class="btn btn-primary" :disabled="disabledButton" @click="addFeed()">Add</button>
+      <button class="btn btn-primary" :disabled="disabledButton" @click="addFeed()">
+        <img
+          src="@/assets/img/loader.svg"
+          class="animate-spin mr-2"
+          style="line{stroke:white}"
+          v-if="creating"
+        />
+        {{(!creating)?'Create Feed':'Creating feed'}}
+      </button>
     </div>
 
 
@@ -31,8 +39,8 @@
 
       <div 
         v-for="feed in feedList"
-        class="w-full rounded-full my-2 py-2 px-4 flex flex-row justify-between" 
-        :style="{backgroundColor:feed.color}" 
+        class="w-full rounded-full my-2 py-2 px-4 flex flex-row justify-between bg-gray-400"  
+       
         :key="feed.url"
       >
         {{feed.name}}
@@ -67,6 +75,7 @@ export default {
       publicFeeds:[],
       privateFeeds:[],
       disabledButton:false,
+      creating:false,
     }),
     methods:{
       addFeed(){
@@ -74,6 +83,7 @@ export default {
         if(this.name.length){
 
           this.disabledButton = true;
+          this.creating = true;
 
           this.ibex
           .createFeed(this.name)
@@ -88,10 +98,12 @@ export default {
             });
 
             this.disabledButton = false;
+            this.creating = false;
             this.name = "";
           })
           .catch((err) => {
             this.disabledButton = false;
+            this.creating = false;
             console.error(err);
             alert("Sorry no feed created!")
           });
