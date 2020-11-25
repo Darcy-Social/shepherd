@@ -115,7 +115,7 @@ export default {
             if(alerts.length){
               if(typeof alerts[0]!=='undefined'){
                 this.errorMessage = alerts[0].innerHTML;
-                this.loading = true;
+                this.loading = false;
               }
             }
           

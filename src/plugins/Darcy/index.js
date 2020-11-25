@@ -5,6 +5,8 @@ import { Ibex } from '../../ibex';
 import store from '../../store';
 import router from '../../router';
 
+const hexRgb = require('hex-rgb');
+
 export default {
     install(Vue, options) {
 
@@ -81,7 +83,20 @@ export default {
                 }
             }
 
+        }
 
+        Vue.getFeedData = async function(url){
+
+
+
+        }
+
+        Vue.isColorLite = function(color){
+            const colors = hexRgb(color);
+
+            var a = 1 - (0.299 * colors.red + 0.587 * colors.green + 0.144 * colors.blue ) /255;
+
+            return (a>0.5);
         }
 
     }

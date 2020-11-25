@@ -16,6 +16,8 @@
 <script>
 import ProgressBar from "../../components/ProgessBar";
 
+import Vue from 'vue';
+
 export default {
   name: "permissionCheck",
   components: {
@@ -34,7 +36,7 @@ export default {
   }),
   computed: {
     ibex() {
-      return this.$store.state.ibex;
+      return this.$store.state.ibex ;
     },
   },
   methods: {
@@ -68,7 +70,7 @@ export default {
     readPost(){
         this.ibex.willFetch(this.postUrl)
         .then(res=>{
-            console.log(res);
+            //console.log(res);
             this.nextTest();
         })
         .catch(err=>{
@@ -83,7 +85,7 @@ export default {
           headers: { "Content-Type": "text/plain" },
         })
         .then((res) => {
-          console.log(res);
+          //console.log(res);
           this.nextTest();
         })
         .catch((err) => {
@@ -137,7 +139,7 @@ export default {
     },
 
   },
-  created() {
+  async created() {
     this.tests = [
       {
         text: "Creating a new feed",
@@ -189,7 +191,10 @@ export default {
       },
     ];
 
-    this.startTests()
+    const gotSession = await Vue.checkSession();
+
+    if (gotSession) 
+      this.startTests()
   },
 };
 </script>

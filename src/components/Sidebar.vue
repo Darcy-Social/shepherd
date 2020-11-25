@@ -2,7 +2,7 @@
   <aside
     class="sidebar bg-primary-500 p-2 rounded-full fixed top-0 left-0 m-2 flex flex-col justify-between items-center"
   >
-    <img src="@/assets/img/logo-bubble-w.svg" aria-hidden="true" class="mt-4" style="width:80%" />
+    <router-link to="/feed"><img src="@/assets/img/logo-bubble-w.svg" aria-hidden="true" class="mt-4" style="width:80%" /></router-link>
 
     <nav class="flex flex-col">
       <router-link

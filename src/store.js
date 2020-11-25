@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    ibex:"",
+    ibex:{},
     session:{},
     settings:{},
     publicFeeds:[],
@@ -34,10 +34,13 @@ export default new Vuex.Store({
 
         const pod = "https://"+data[2];
         const name = decodeURIComponent(data[5]);
+        const color = feeds[key].color || '#000000';
 
         betterFeeds.push({
             pod,
             name,
+            color,
+            textIsLite: Vue.isColorLite(color),
             url:key
         });
 

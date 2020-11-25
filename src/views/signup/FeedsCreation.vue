@@ -11,7 +11,6 @@
 
       <span v-if="isPublic" class="font-bold text-center">
         These feeds will be visible to everybody<br/>
-        (you don’t need to have one)
       </span>
       <span v-else class="font-bold text-center">
         Feeds that are visible only to the people you allow.<br/>
@@ -39,8 +38,8 @@
 
       <div 
         v-for="feed in feedList"
-        class="w-full rounded-full my-2 py-2 px-4 flex flex-row justify-between bg-gray-400"  
-       
+        class="w-full rounded-full my-2 py-2 px-4 flex flex-row justify-between"  
+        :style="{backgroundColor:feed.color}"
         :key="feed.url"
       >
         {{feed.name}}
@@ -51,17 +50,18 @@
 
     </div>
 
-    <button class="btn btn-primary my-10" @click="isPublic=!isPublic">
+    <!-- <button class="btn btn-primary my-10" @click="isPublic=!isPublic">
       {{(isPublic)?'Private':'Public'}} Feeds
-    </button>
+    </button> -->
 
-    <router-link v-if="!isPublic" class="btn btn-green mt-2" to="/onboarding/profile">Continue</router-link>
+    <router-link v-if="isPublic" class="btn btn-green mt-2" to="/onboarding/profile">Continue</router-link>
 
   </div>
 </template>
 
 <script>
-import FormGroup from '../../components/FormGroup'
+import FormGroup from '../../components/FormGroup';
+import Vue from 'vue';
 
 export default {
     name:"feedsCreation",
@@ -76,17 +76,18 @@ export default {
       privateFeeds:[],
       disabledButton:false,
       creating:false,
+      gotSession:false,
     }),
     methods:{
       addFeed(){
         
-        if(this.name.length){
+        if(this.name.length && this.gotSession){
 
           this.disabledButton = true;
           this.creating = true;
 
           this.ibex
-          .createFeed(this.name)
+          .createFeed(this.name,this.color)
           .then((res) => {
 
             console.log(res);
@@ -136,8 +137,8 @@ export default {
         return this.$store.state.ibex;
       }
     },
-    created(){
-        
+    async created(){
+        this.gotSession = await Vue.checkSession();
     }
 }
 </script>

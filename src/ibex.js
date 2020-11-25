@@ -104,7 +104,12 @@ class Ibex {
                     });
             });
     }
-    createFeed(feedName) {
+     /**
+     * 
+     * @param {string} feedName - name of the new feed
+     * @param {string} color - color to assign to the feed, default value is black
+     */
+    createFeed(feedName,color = '#000000') {
         //log("creating feed", feedName)
         return this.makePath(this.feedRoot(), feedName)
             .then((res) => {
@@ -112,7 +117,7 @@ class Ibex {
                     () => this.setFeedPermissions(res.url, [], undefined, undefined)
                         .then(() => this.manifest())
                         .then(manifest => {
-                            manifest[res.url] = manifest[res.url] || { listedDate: new Date() };
+                            manifest[res.url] = manifest[res.url] || { listedDate: new Date(), color:color };
                             return this.saveManifest(manifest)
                         })
                         .then(() => this.willFetch(res.url))

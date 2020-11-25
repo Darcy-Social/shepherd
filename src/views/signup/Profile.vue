@@ -32,11 +32,14 @@
     <button @click="saveSettings()" class="btn btn-primary">
       Save & finish
     </button>
+    <router-link class="btn btn-gray" to="/onboarding/feeds/new">Go Back</router-link>
   </div>
 </template>
 
 <script>
 import FormGroup from "../../components/FormGroup";
+
+import Vue from 'vue';
 
 export default {
   name: "onboardingProfile",
@@ -47,6 +50,7 @@ export default {
     name: "",
     bio: "",
     isPublic: false,
+    gotSession:false,
   }),
   computed: {
     ibex() {
@@ -55,7 +59,7 @@ export default {
   },
   methods: {
     saveSettings() {
-      if (this.name.length) {
+      if (this.name.length && this.gotSession) {
         const profile = {
           name: this.name,
           bio: this.bio,
@@ -78,6 +82,9 @@ export default {
       }
     },
   },
+  async created(){
+    this.gotSession = await Vue.checkSession();
+  }
 };
 </script>
 

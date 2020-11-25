@@ -13,39 +13,83 @@
         :key="feed.url"
         class="flex flex-row justify-between items-center shadow-md rounded-lg bg-white p-2 border border-gray-300 my-3"
       >
-        {{ feed.name }} 
+        <span
+          :style="{ backgroundColor: feed.color }"
+          class="px-4 py-1 rounded-full"
+          :class="{ 'text-white': feed.textIsLite }"
+          >{{ feed.name }}
+        </span>
 
-        <button class="btn btn-orange text-white" @click="feedToDelete=feed.url;showDeleteModal=true;"><img src="@/assets/img/x.svg" /></button>      
+        <button
+          class="btn btn-orange text-white"
+          @click="
+            feedToDelete = feed.url;
+            showDeleteModal = true;
+          "
+        >
+          <img src="@/assets/img/x.svg" />
+        </button>
       </article>
     </main>
 
     <Modal v-show="showNewFeedModal" title="Create new Feed">
       <template v-slot:body>
-        <FormGroup label="Feed Name" type="text" v-model="newFeedName" />
+        <div class="flex flex-row justify-around items-end">
+          <FormGroup label="Feed Name" type="text" v-model="newFeedName" />
+          <FormGroup
+            type="color"
+            label="color"
+            v-model="newFeedColor"
+            class="mx-2"
+          />
+        </div>
       </template>
 
       <template v-slot:footer>
         <div class="flex flex-row justify-center items-center">
-          <button class="btn btn-gray mr-3" @click="showNewFeedModal = false">
+          <button class="btn btn-gray mr-3" @click="showNewFeedModal = false" :disabled="isSaving">
             Cancel
           </button>
-          <button class="btn btn-primary" @click="createPublicFeed()">
-            Save
+          <button class="btn btn-primary" @click="createPublicFeed()" :disabled="isSaving">
+            <img
+              src="@/assets/img/loader.svg"
+              class="animate-spin mr-2"
+              style="
+                line {
+                  stroke: white;
+                }
+              "
+              v-if="isSaving"
+            />
+            {{ isSaving ? "Saving" : "Save" }}
           </button>
         </div>
       </template>
     </Modal>
 
-     <Modal v-show="showDeleteModal" title="Confirm Feed Deletion?">
-        <h1>Confirm the deletion of the feed</h1>
-        You will also lose all the feed's content!
+    <Modal
+      v-show="showDeleteModal"
+      @close="showDeleteModal = false"
+      title="Confirm Feed Deletion?"
+    >
+      <h1>Confirm the deletion of the feed</h1>
+      You will also lose all the feed's content!
 
       <template v-slot:footer>
         <div class="flex flex-row justify-center items-center">
-          <button class="btn btn-gray mr-3" @click="showDeleteModal = false;feedToDelete='';">
+          <button
+            class="btn btn-gray mr-3"
+            @click="
+              showDeleteModal = false;
+              feedToDelete = '';
+            "
+          >
             Cancel
           </button>
-          <button class="btn btn-orange" @click="deletePublicFeed(feedToDelete)">
+          <button
+            class="btn btn-orange"
+            @click="deletePublicFeed(feedToDelete)"
+          >
             Delete
           </button>
         </div>
@@ -59,6 +103,8 @@ import Sidebar from "../components/Sidebar";
 import Modal from "../components/Modal";
 import FormGroup from "../components/FormGroup";
 
+import Vue from "vue";
+
 export default {
   components: {
     Sidebar,
@@ -67,9 +113,11 @@ export default {
   },
   data: () => ({
     newFeedName: "",
+    newFeedColor: "#000000",
     showNewFeedModal: false,
-    showDeleteModal:false,
-    feedToDelete:"",
+    showDeleteModal: false,
+    feedToDelete: "",
+    isSaving:false,
   }),
   computed: {
     ibex() {
@@ -90,19 +138,23 @@ export default {
         .catch((err) => console.log(err));
     },
     createPublicFeed() {
+      this.isSaving = true;
       if (this.newFeedName.length) {
         this.ibex
-          .createFeed(this.newFeedName)
+          .createFeed(this.newFeedName, this.newFeedColor)
           .then((res) => {
             console.log(res);
 
             this.newFeedName = "";
+            this.newFeedColor = "#000000";
             this.showNewFeedModal = false;
 
+            this.isSaving = false;
             this.getPublicFeeds();
           })
           .catch((err) => {
             console.error(err);
+            this.isSaving = false;
             this.showNewFeedModal = false;
             alert("Sorry no feed created!");
           });
@@ -113,16 +165,19 @@ export default {
         .deleteRecursive(url)
         .then((res) => {
           console.log(res);
-          this.getPublicFeeds()
+          this.getPublicFeeds();
+          this.showDeleteModal = false;
         })
         .catch((err) => {
           console.error(err);
           alert("Error deleting feed");
+          this.showDeleteModal = false;
         });
     },
   },
-  created() {
-    this.getPublicFeeds();
+  async created() {
+    const gotSession = await Vue.checkSession();
+    if (gotSession) this.getPublicFeeds();
   },
 };
 </script>
