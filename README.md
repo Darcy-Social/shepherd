@@ -1,5 +1,5 @@
 # Darcy shepherd
-![Darcy Shepherd logo](shepherd-logo.png)
+<img width="139" alt="shepeherd-logo" src="https://user-images.githubusercontent.com/33927544/100249416-d3081e80-2f3c-11eb-8f67-1e5f58e0f1f3.png">
 
 Darcy Shepherd is a Vue.js web app to use with the Darcy Ibex libary. 
 
@@ -36,4 +36,4 @@ You can deploy the web app with the following command
 npm run build
 ```
 
-The file **.env.production** contains the web address of your web app _(in this case ibex.darcy.is)_
+The file **.env.production** contains the web address of your web app _(in this case shepherd.darcy.is)_
