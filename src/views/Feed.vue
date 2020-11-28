@@ -20,8 +20,13 @@
             :options="publicFeeds.map((el) => ({ id: el.name, name: el.name }))"
             class="my-2"
           />
-          <button class="btn btn-primary w-full justify-center" @click="post()" :disabled="!newPostText.length">
-            Post
+          <button class="btn btn-primary w-full justify-center" @click="post()" :disabled="!newPostText.length||isPosting">
+            <img
+              v-if="isPosting"
+              src="@/assets/img/loader.svg"
+              class="animate-spin mr-2"
+            />
+            {{(isPosting)?'Posting':'Post'}}
           </button>
         </div>
       </div>
@@ -76,6 +81,7 @@ export default {
     aggregator: {},
     loadingPosts: false,
     createdPosts:[],
+    isPosting:false,
   }),
   computed: {
     ibex() {
@@ -93,15 +99,18 @@ export default {
   },
   methods: {
     post() {
+      this.isPosting = true;
       this.ibex
         .createPost(this.newPostText, this.feedToPostTo)
         .then((res) => {
           console.info(res.url);
-          this.createdPosts.push(res.url);
+          this.createdPosts.unshift(res.url);
           this.newPostText = "";
+          this.isPosting = false;
         })
         .catch((err) => {
           console.log(err);
+          this.isPosting = false;
           alert("Error while creating post");
         });
     },

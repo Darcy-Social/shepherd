@@ -89,15 +89,16 @@
       title="Add Feed"
     >
       <template v-slot:body>
-        <FormGroup type="text" v-model="newFeedUrl" placeholder="Insert url" />
+        <FormGroup type="text" v-model="newFeedUrl" class="my-2" style="width: 25rem;" label="Insert WebID" placeholder="Insert url" />
         <button
           class="btn btn-primary"
           @click="getUserFeeds({ url: newFeedUrl })"
+          :disabled="isLoadingFeeds"
         >
          <img
           v-if="isLoadingFeeds"
           src="@/assets/img/loader.svg"
-          class="animate-spin mx-auto mb-3"
+          class="animate-spin mr-2"
         />
           Load Feeds
         </button>
@@ -153,7 +154,7 @@ export default {
     userName: "",
     userFeeds: [],
     isSubscribeModalVisible: false,
-    newFeedUrl: "https://feedtest.darcypod.com:8443",
+    newFeedUrl: "",
     profiles:{},
     isLoadingFeeds:false,
     feedsModalTitle:"",

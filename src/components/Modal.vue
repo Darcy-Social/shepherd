@@ -1,10 +1,9 @@
 <template>
   <transition name="modal-fade">
     <div
-      class="modal-bg w-screen bg-black bg-opacity-50 fixed top-0 left-0 flex flex-row justify-center items-center"
-      @click="close"
+      class="modal-bg w-screen bg-black bg-opacity-50 z-0 fixed top-0 left-0 flex flex-row justify-center items-center"
     >
-      <div class="modal rounded-md p-2 bg-white flex flex-col" role="dialog" aria-labelledby="modalTitle"
+      <div class="modal absolute rounded-md p-2 bg-white flex flex-col z-10" role="dialog" aria-labelledby="modalTitle"
         aria-describedby="modalDescription">
         <header class="flex flex-row justify-between content-center pb-3" id="modalTitle">
           <b>{{ title }}</b>
