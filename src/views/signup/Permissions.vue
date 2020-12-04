@@ -1,14 +1,19 @@
 <template class="">
-  <div class="bg-primary-200 flex flex-row items-center justify-center" style="height:100vh">
+  <div
+    class="bg-primary-200 flex flex-row items-center justify-center"
+    style="height: 100vh"
+  >
     <div class="flex flex-col items-center w-full">
-      <img src="@/assets/img/permissions-blob.svg" style="width:55%" alt="Darcy Logo" />
-      <h1 class="mb-2">Checking you permissions</h1>
-         <img
-          src="@/assets/img/loader.svg"
-          class="animate-spin mx-auto mb-3"
-        />
-      <progressBar :value="currentIndex" min="0" :max="tests.length-1" />
-      <span class="mt-2">{{currentTest.text}}</span>
+      <img
+        src="@/assets/img/permissions-blob.svg"
+        style="width: 55%"
+        alt="Darcy Logo"
+      />
+      <h1 class="mb-2">Checking your permissions</h1>
+      <span>It might take a while to start</span>
+      <img src="@/assets/img/loader.svg" class="animate-spin mx-auto mb-3" />
+      <progressBar :value="currentIndex" min="0" :max="tests.length - 1" />
+      <span class="mt-2">{{ currentTest.text }}</span>
     </div>
   </div>
 </template>
@@ -16,7 +21,7 @@
 <script>
 import ProgressBar from "../../components/ProgessBar";
 
-import Vue from 'vue';
+import Vue from "vue";
 
 export default {
   name: "permissionCheck",
@@ -28,15 +33,14 @@ export default {
     errors: [],
     currentIndex: 0,
     currentTest: {},
-    interval: {},
 
-    feedName:"",
-    feedUrl:"",
+    feedName: "",
+    feedUrl: "",
     postUrl: "",
   }),
   computed: {
     ibex() {
-      return this.$store.state.ibex ;
+      return this.$store.state.ibex;
     },
   },
   methods: {
@@ -50,10 +54,19 @@ export default {
           this.nextTest();
         })
         .catch((err) => {
+          this.errors.push({
+            step: "Creating a new feed",
+            err,
+          });
           console.error(err);
+          this.nextTest();
         });
     },
     makePost() {
+      console.info("Make post test -----")
+
+      try{
+
       this.ibex
         .createPost("Test Post", this.feedName)
         .then((res) => {
@@ -62,22 +75,39 @@ export default {
           this.nextTest();
         })
         .catch((err) => {
-          this.errors.push(err);
+          this.errors.push({
+            step: "Creating a new post",
+            err,
+          });
           console.log(err);
+          this.nextTest();
         });
+
+      }catch(e){
+        console.info("catching make post")
+        console.error(e);
+      }
     },
     makeComment() {},
-    readPost(){
-        this.ibex.willFetch(this.postUrl)
-        .then(res=>{
-            //console.log(res);
-            this.nextTest();
+    readPost() {
+      console.info("Read post test -----")
+      this.ibex
+        .willFetch(this.postUrl)
+        .then((res) => {
+          //console.log(res);
+          this.nextTest();
         })
-        .catch(err=>{
-            console.error(err);
-        })
+        .catch((err) => {
+          this.errors.push({
+            step: "Reading the created post",
+            err,
+          });
+          console.error(err);
+          this.nextTest();
+        });
     },
     editPost() {
+      console.info("Edit post test -----")
       this.ibex
         .willFetch(this.postUrl, {
           method: "PUT",
@@ -89,30 +119,53 @@ export default {
           this.nextTest();
         })
         .catch((err) => {
-          this.errors.push(err);
+          this.errors.push({
+            step: "Editing the created post",
+            err,
+          });
+          this.nextTest();
         });
     },
-    deletePost(){
-        this.ibex.delete(this.postUrl)
-        .then(res=>{    
-            this.postUrl = "";
-            this.nextTest();
+    deletePost() {
+      console.info("Delete post test -----")
+      this.ibex
+        .delete(this.postUrl)
+        .then((res) => {
+          this.postUrl = "";
+          this.nextTest();
         })
-        .catch(err=>{
-            console.log(err);
-            this.errors.push(err);
+        .catch((err) => {
+          console.log(err);
+          this.errors.push({
+            step: "Deleting the post",
+            err,
+          });
+          this.nextTest();
+        });
+    },
+    deleteFeed() {
+      console.info("Delete Feed test -----")
+
+      try{
+
+      this.ibex
+        .deleteRecursive(this.feedUrl)
+        .then((res) => {
+          console.log("feed deletion res",res);
+          this.nextTest();
+        })
+        .catch((err) => {
+          this.errors.push({
+            step: "Deleting the feed",
+            err,
+          });
+          console.log("feed deletion error",err);
+          this.nextTest();
         });
 
-    },
-    deleteFeed(){
-        this.ibex.deleteRecursive(this.feedUrl)
-        .then(res=>{
-            console.log(res);
-            this.nextTest();
-        })
-        .catch(err=>{
-            console.log(err);
-        })
+      }catch(e){
+        console.error("cathing delete feed",e)
+      }
     },
 
     //------------------------------------
@@ -133,11 +186,11 @@ export default {
           this.$router.push("/onboarding/permissions/success");
         } else {
           //Test errors
-          this.$router.puhs("/onboarding/permissions/errors");
+          this.$store.commit("setPermissionErrrors", this.errors);
+          this.$router.push("/onboarding/permissions/errors");
         }
       }
     },
-
   },
   async created() {
     this.tests = [
@@ -153,10 +206,10 @@ export default {
       //     text:"Creating a new comment",
       //     method:this.waitTest
       // },
-    //   {
-    //     text: "Accessing the feed",
-    //     method: this.waitTest,
-    //   },
+      //   {
+      //     text: "Accessing the feed",
+      //     method: this.waitTest,
+      //   },
       {
         text: "Reading the post",
         method: this.readPost,
@@ -193,8 +246,7 @@ export default {
 
     const gotSession = await Vue.checkSession();
 
-    if (gotSession) 
-      this.startTests()
+    if (gotSession) this.startTests();
   },
 };
 </script>

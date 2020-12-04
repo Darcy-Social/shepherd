@@ -315,6 +315,7 @@ class Ibex {
                         }
                     })
                     .then(res => { resolve() })
+                    .catch(err=>{ reject() })
             })
         })
     }

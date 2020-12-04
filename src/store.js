@@ -12,6 +12,7 @@ export default new Vuex.Store({
     selectedPost:"",
     selectedUser:"",
     usersCache:{},
+    permissionErrors:[],
   },
   mutations: {
     setSettings(state,settings){
@@ -56,7 +57,11 @@ export default new Vuex.Store({
     },
     addUserToCache(state,user){
       state.usersCache[user.url] = user;
-    }
+    },
+
+    setPermissionErrrors(state,errors){
+      state.permissionErrors = errors;
+    },
  
   },
   actions: {
