@@ -21,7 +21,7 @@
                 >
                     
                 </div> -->
-          <div @click="goToUser(user)" class="cursor-pointer" >
+          <div @click="goToUser(key)" class="cursor-pointer" >
             <span v-if="typeof profiles[key] !== 'undefined'">
               <b>{{ profiles[key].name }}</b
               ><br />
@@ -188,7 +188,8 @@ export default {
   },
   methods: {
     goToUser(user) {
-      this.$store.commit("setSelectedUser", user.webId);
+      console.log(user)
+      this.$store.commit("setSelectedUser", user);
       this.$router.push("/user");
     },
    

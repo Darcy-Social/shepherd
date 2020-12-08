@@ -29,8 +29,15 @@
       </div>
     </div>
 
-    <button @click="saveSettings()" class="btn btn-primary">
-      Save & finish
+    <button @click="saveSettings()" :disabled="saving" class="btn btn-primary">
+      <img
+          src="@/assets/img/loader.svg"
+          class="animate-spin mr-2"
+          style="line{stroke:white}"
+          v-if="saving"
+        />
+
+       {{(saving)?'Saving...':'Save & finish'}}
     </button>
     <router-link class="btn btn-gray" to="/onboarding/feeds/new">Go Back</router-link>
   </div>
@@ -51,6 +58,7 @@ export default {
     bio: "",
     isPublic: false,
     gotSession:false,
+    saving:false,
   }),
   computed: {
     ibex() {
@@ -60,6 +68,9 @@ export default {
   methods: {
     saveSettings() {
       if (this.name.length && this.gotSession) {
+
+        this.saving = true;
+
         const profile = {
           name: this.name,
           bio: this.bio,
@@ -71,10 +82,11 @@ export default {
           this.ibex
             .saveSettings({boarded:true})
             .then((res) => {
-              
+              this.saving = false;
               this.$router.push("/onboarding/success");
             })
             .catch((err) => {
+              this.saving = false;
               console.error(err);
             });
 

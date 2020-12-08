@@ -3,14 +3,14 @@
 
       <div class="flex flex-row blob bg-contain bg-center bg-no-repeat text-center w-full md:w-2/3 px-24 py-32" >
 
-        <div class="w-1/2 flex flex-col justify-center">
-            <img src="@/assets/img/public-person.svg" />
+        <div class="w-1/2 flex flex-col justify-end items-center">
+            <img src="@/assets/img/public-person.svg" class="w-1/2 h-auto" />
             <h2>Public Feeds</h2>
             Everybody can see what is in here. You can still set some boundaries
         </div>
 
-        <div class="w-1/2 flex flex-col justify-center">
-            <img src="@/assets/img/private-person.svg" />
+        <div class="w-1/2 flex flex-col justify-end items-center">
+            <img src="@/assets/img/private-person.svg" class="w-1/2 h-auto" />
             <h2>Private Feeds</h2>
             You choose who can see, comment and know about what is in here
         </div>

@@ -3,7 +3,8 @@
     <Sidebar />
 
     <main class="main px-2">
-      <h2>{{ $store.state.selectedUser }} Posts</h2>
+      <h2>{{profile.name|| user}}</h2>
+      <em>{{profile.bio || ""}}</em>
 
       <Post :post="post" v-for="post in posts" :key="post" />
     </main>
@@ -25,6 +26,7 @@ export default {
   },
   data: () => ({
     aggregator: {},
+    profile:{},
   }),
   computed: {
     user() {
@@ -64,6 +66,7 @@ export default {
         next = await this.aggregator.getNextOlderPostUrl();
       }
     },
+
   },
   async created() {
     const gotSession = await Vue.checkSession();
@@ -73,6 +76,7 @@ export default {
 
       if (gotSettings) {
         this.getAggregatedFeeds();
+        this.profile = await Vue.getUserProfile(this.user)
       }
     }
   },

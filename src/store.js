@@ -12,7 +12,10 @@ export default new Vuex.Store({
     selectedPost:"",
     selectedUser:"",
     usersCache:{},
+
+    //onboarding data
     permissionErrors:[],
+    createdPublicFeeds:[],
   },
   mutations: {
     setSettings(state,settings){
@@ -59,9 +62,15 @@ export default new Vuex.Store({
       state.usersCache[user.url] = user;
     },
 
+
+    //onboarding
+
     setPermissionErrrors(state,errors){
       state.permissionErrors = errors;
     },
+    setCreatedPublicFeeds(state,feeds){
+      state.createdPublicFeeds = feeds;
+    }
  
   },
   actions: {

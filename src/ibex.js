@@ -293,7 +293,7 @@ class Ibex {
     _deleteRecursive(folder, onlyFiles = false) {
 
         const store = $rdf.graph();
-        const fetcher = new $rdf.Fetcher(store);
+        const fetcher = new $rdf.Fetcher(store); 
 
         return new Promise((resolve, reject) => {
             fetcher.load(folder).then(() => {
@@ -311,7 +311,8 @@ class Ibex {
                     .then(() => {
                         if (!onlyFiles) {
                             //console.log("deleting directory " + folder.uri);
-                            return fetcher.webOperation('DELETE', folder.uri)
+                            return this.willFetch(folder.uri, { method: 'DELETE' })
+                            //return fetcher.webOperation('DELETE', folder.uri)
                         }
                     })
                     .then(res => { resolve() })

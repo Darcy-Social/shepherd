@@ -146,8 +146,6 @@ export default {
     deleteFeed() {
       console.info("Delete Feed test -----")
 
-      try{
-
       this.ibex
         .deleteRecursive(this.feedUrl)
         .then((res) => {
@@ -162,10 +160,7 @@ export default {
           console.log("feed deletion error",err);
           this.nextTest();
         });
-
-      }catch(e){
-        console.error("cathing delete feed",e)
-      }
+   
     },
 
     //------------------------------------

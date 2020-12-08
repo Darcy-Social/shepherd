@@ -87,10 +87,17 @@
             Cancel
           </button>
           <button
+            :disabled="isDeleting"
             class="btn btn-orange"
             @click="deletePublicFeed(feedToDelete)"
           >
-            Delete
+            <img
+              src="@/assets/img/loader.svg"
+              class="animate-spin mr-2"
+              style="line{stroke:white}"
+              v-if="isDeleting"
+            />
+            {{(isDeleting)?'Deleting..':'Delete'}}
           </button>
         </div>
       </template>
@@ -118,6 +125,7 @@ export default {
     showDeleteModal: false,
     feedToDelete: "",
     isSaving:false,
+    isDeleting:false,
   }),
   computed: {
     ibex() {
@@ -132,7 +140,7 @@ export default {
       this.ibex
         .manifest()
         .then((res) => {
-          console.log(res);
+          //console.log(res);
           this.$store.commit("setPublicFeeds", res);
         })
         .catch((err) => console.log(err));
@@ -143,7 +151,7 @@ export default {
         this.ibex
           .createFeed(this.newFeedName, this.newFeedColor)
           .then((res) => {
-            console.log(res);
+            //console.log(res);
 
             this.newFeedName = "";
             this.newFeedColor = "#000000";
@@ -161,15 +169,17 @@ export default {
       }
     },
     deletePublicFeed(url) {
+      this.isDeleting = true;
       this.ibex
         .deleteRecursive(url)
         .then((res) => {
-          console.log(res);
+          this.isDeleting = false;
           this.getPublicFeeds();
           this.showDeleteModal = false;
         })
         .catch((err) => {
           console.error(err);
+          this.isDeleting = false;
           alert("Error deleting feed");
           this.showDeleteModal = false;
         });

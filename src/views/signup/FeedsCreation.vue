@@ -38,7 +38,8 @@
 
       <div 
         v-for="feed in feedList"
-        class="w-full rounded-full my-2 py-2 px-4 flex flex-row justify-between"  
+        class="w-full rounded-full my-2 py-2 px-4 flex flex-row justify-between" 
+        :class="getFeedColorClass(feed.color)"
         :style="{backgroundColor:feed.color}"
         :key="feed.url"
       >
@@ -54,7 +55,7 @@
       {{(isPublic)?'Private':'Public'}} Feeds
     </button> -->
 
-    <router-link v-if="isPublic" class="btn btn-green mt-2" to="/onboarding/profile">Continue</router-link>
+    <button class="btn btn-green mt-2" v-if="isPublic" :disabled="!publicFeeds.length" @click="goToProfile()" >Continue</button>
 
   </div>
 </template>
@@ -128,6 +129,16 @@ export default {
         });
 
       },
+      goToProfile(){
+        
+        this.$store.commit("setCreatedPublicFeeds",this.publicFeeds);
+        this.$router.push("/onboarding/profile");
+
+      },
+
+      getFeedColorClass(color){
+        return (Vue.isColorLite(color))?'text-white':'text-black';
+      }
     },
     computed:{
       feedList(){
@@ -139,6 +150,7 @@ export default {
     },
     async created(){
         this.gotSession = await Vue.checkSession();
+        this.publicFeeds = this.$store.state.createdPublicFeeds;
     }
 }
 </script>
