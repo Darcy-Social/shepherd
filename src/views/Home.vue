@@ -12,9 +12,14 @@
       <h2>Or</h2>
 
       <router-link to="/register" class="btn btn-lg btn-primary mt-4">Create an account</router-link>
+
+
+      <button @click="checkSession()">Check Session y'all</button>
+
     </div>
-   
-   
+
+
+
    
   </div>
 </template>
@@ -29,6 +34,8 @@ export default {
   data:()=>({
    }),
   methods: {
+
+    //login using darcypod.com
     async login() {
       const session = await auth.currentSession();
       if (!session)
@@ -37,24 +44,35 @@ export default {
         });
       else alert(`Logged in as ${session.webId}`);
     },
+
+    //login using a custom solid provider using the standard popup
     async showPopUp() {
       let session = await auth.currentSession();
       let popupUri = "https://solidcommunity.net/common/popup.html";
       if (!session) session = await auth.popupLogin({ popupUri });
       this.$router.push("/feed");
     },
+
+    //check if a solid session is present, if it exists then reditect to the feed view
     async checkSession() {
 
       let session = await auth.currentSession();
 
       if(session){
-
+        //go to the feed view (home page)
         this.$router.push("/feed");
+      }else{
+
+        // await auth.login("https://darcypod.com:8443", {
+        //   callbackUri: process.env.VUE_APP_ROOT_URL
+        // });
+
       }
       
     },
   },
   created(){
+    //on creation check if the session exists
     this.checkSession();
   }
 };
