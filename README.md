@@ -22,7 +22,7 @@ This needs to be done until ibex-lib can be made into an npm package.
 
 ### Development server
 
-You can run a vue-cli developmente server with the following command.
+You can run a vue-cli development server with the following command.
 
 ```
 npm run serve
