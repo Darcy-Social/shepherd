@@ -13,7 +13,7 @@
 
       <router-link to="/register" class="btn btn-lg btn-primary mt-4">Create an account</router-link>
 
-
+      <button @click="checkSession()">Check session</button>
       
 
     </div>
@@ -63,9 +63,21 @@ export default {
         this.$router.push("/feed");
       }else{
 
-        // await auth.login("https://darcypod.com:8443", {
-        //   callbackUri: process.env.VUE_APP_ROOT_URL
-        // });
+        var vars = {};
+        var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+            vars[key] = value;
+        });
+
+        //if the url contains a token retry login (temporary fix)
+        if(typeof vars['id_token'] !== 'undefined'){
+          if(vars['id_token'].length){
+             await auth.login("https://darcypod.com:8443", {
+              callbackUri: process.env.VUE_APP_ROOT_URL
+            });
+          }
+
+        }
+       
 
       }
       

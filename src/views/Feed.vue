@@ -130,6 +130,7 @@ export default {
       this.getPosts().then((res) => {});
     },
 
+    //get your own feeds
     getOwnFeeds() {
       if (!this.publicFeeds.length) {
         this.ibex
@@ -151,6 +152,13 @@ export default {
 
       this.loadingPosts = false;
     },
+  },
+  watch:{
+    //Set the defaul feed in the dropdown to the first one
+    publicFeeds(feeds){
+      if(feeds.length)
+        this.feedToPostTo = feeds[0].name;
+    }
   },
   async created() {
     const gotSession = await Vue.checkSession();
