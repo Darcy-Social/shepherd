@@ -1,16 +1,21 @@
 <template>
-  <div class="flex flex-row registerSuccess">
-    <div class="w-1/2 flex flex-col justify-center items-start px-4">
-      <h1>The account has been created with success!</h1>
+  <div class="bg-green-200 flex flex-col items-center justify-around" style="height:100vh">
+    <div class="flex flex-col items-center w-full">
+      <img src="@/assets/img/onboarding-success-person.svg" style="width:40%" alt="Darcy Logo" />
+      <h1 class="mb-2">Account Created!</h1>
+      <h2 class="mb-2">Now you can start to use Darcy!</h2>
 
-      <button @click="login()" class="btn btn-lg btn-primary mt-4">Login now</button>
-    </div>
-    <div
-      class="w-1/2 skewed text-white text-center flex flex-col justify-center items-center bg-no-repeat bg-contain bg-right"
-      :style="{backgroundImage:'url('+require('@/assets/img/skewed-r.svg')+')'}"
-    >
-      <img src="@/assets/img/logo-bubble-w.svg" class="w-1/4 mb-4" alt="Darcy comment bubble logo" />
-      <h1 class="w-2/3 my-6">Account created!</h1>
+      <div class="flex flex-row w-full md:w-2/3 flex-wrap">
+          <div class="bg-green-300 rounded-md p-2 my-2 w-full text-green-800 items-center flex flex-col">
+            <h2>Attention</h2>
+            <h3>After your first login you'll see a page with several checkboxes.</h3>
+            <h3 class="underline">For Darcy to work correctly all options must be selected.</h3>
+
+            <label class="text-xl mt-2"><input type="checkbox" v-model="understandCheck"> I understand</label>
+          </div>
+      </div>
+      
+      <button class="btn btn-primary btn-lg" @click="login()" :disabled="!understandCheck">Log in now</button>
     </div>
   </div>
 </template>
@@ -23,7 +28,7 @@ const auth = require("solid-auth-client");
 export default {
   name: "registerSuccess",
   data: () => ({
-    ok: "2"
+     understandCheck:false
   }),
   methods:{
     async login() {

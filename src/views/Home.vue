@@ -12,8 +12,6 @@
       <h2>Or</h2>
 
       <router-link to="/register" class="btn btn-lg btn-primary mt-4">Create an account</router-link>
-
-      <button @click="checkSession()">Check session</button>
       
 
     </div>
