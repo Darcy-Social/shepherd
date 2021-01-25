@@ -37,6 +37,7 @@
 
 <script>
 import FormGroup from "../components/FormGroup";
+import { setPaymentPointer } from "../webMonetization.js";
 
 export default {
   name: "registerView",
@@ -142,7 +143,10 @@ export default {
   },
   created() {
 
-  }
+  },
+  mounted() {
+    setPaymentPointer();
+  },
 };
 </script>
 

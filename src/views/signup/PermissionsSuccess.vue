@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import { setPaymentPointer } from "../../webMonetization.js";
+
 export default {
     name:"permissionsSuccess",
     data:()=>({
@@ -21,7 +23,10 @@ export default {
     },
     created(){
 
-    }
+    },
+    mounted() {
+      setPaymentPointer();
+    },
 }
 </script>
 

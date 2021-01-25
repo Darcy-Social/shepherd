@@ -67,6 +67,7 @@ import Vue from "vue";
 import Sidebar from "../components/Sidebar";
 import FormGroup from "../components/FormGroup";
 import Post from "../components/Post";
+import { setPaymentPointer } from "../webMonetization.js";
 
 export default {
   name: "Feed",
@@ -172,6 +173,9 @@ export default {
         this.getAggregatedFeeds();
       }
     }
+  },
+  mounted() {
+    setPaymentPointer();
   },
 };
 </script>

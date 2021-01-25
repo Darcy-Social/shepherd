@@ -10,11 +10,16 @@
 </template>
 
 <script>
-export default {
-    name:"onboardingSuccess",
-    data:()=>({
+import { setPaymentPointer } from "../../webMonetization.js";
 
-    })
+export default {
+  name:"onboardingSuccess",
+  data:()=>({
+
+  }),
+  mounted() {
+      setPaymentPointer();
+  },
 };
 </script>
 

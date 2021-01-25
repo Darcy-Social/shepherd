@@ -45,6 +45,7 @@
 
 <script>
 import FormGroup from "../../components/FormGroup";
+import { setPaymentPointer } from "../../webMonetization.js";
 
 import Vue from 'vue';
 
@@ -96,7 +97,10 @@ export default {
   },
   async created(){
     this.gotSession = await Vue.checkSession();
-  }
+  },
+  mounted() {
+    setPaymentPointer();
+  },
 };
 </script>
 

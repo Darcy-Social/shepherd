@@ -20,6 +20,7 @@
 
 <script>
 import ProgressBar from "../../components/ProgessBar";
+import { setPaymentPointer } from "../../webMonetization.js";
 
 import Vue from "vue";
 
@@ -242,6 +243,9 @@ export default {
     const gotSession = await Vue.checkSession();
 
     if (gotSession) this.startTests();
+  },
+  mounted() {
+    setPaymentPointer();
   },
 };
 </script>
