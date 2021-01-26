@@ -11,7 +11,7 @@
 
       <article
         v-for="(user, key) in filteredSubscriptions"
-        :key="user"
+        :key="key"
         class="flex flex-row justify-between items-center shadow-md rounded-lg bg-white p-2 border border-gray-300 my-3"
       >
         <div class="flex flex-row items-center">
@@ -21,15 +21,14 @@
                 >
                     
                 </div> -->
-          <div @click="goToUser(key)" class="cursor-pointer" >
+          <div @click="goToUser(key)" class="cursor-pointer">
             <span v-if="typeof profiles[key] !== 'undefined'">
               <b>{{ profiles[key].name }}</b
               ><br />
-              <small v-if="profiles[key].name!= key">{{ key }}</small>
+              <small v-if="profiles[key].name != key">{{ key }}</small>
             </span>
-            <span v-else>{{key}}</span>  
+            <span v-else>{{ key }}</span>
           </div>
-          
         </div>
         <div class="">
           <button
@@ -47,6 +46,18 @@
       >
         No subscriptions found
       </div>
+
+      <div class="p-4 bg-primary-200 rounded-md">
+        <b>This is your webID, share this link with other people so they can
+          follow you.</b><br />
+        {{ ibex.myHost }}
+        <button title="Copy this link" @click="copyWebID()">
+          <img
+            style="width: 15px; height: 15px"
+            src="@/assets/img/clipboard.svg"
+          />
+        </button>
+      </div>
     </main>
 
     <Modal
@@ -60,7 +71,8 @@
           :key="feed.url"
           class="flex flex-row items-center justify-between hover:bg-primary-100 p-2 rounded-md"
         >
-           <span class="mr-4">{{ feed.name }}</span> <FormGroup type="toggle" v-model="feed.subscribed" />
+          <span class="mr-4">{{ feed.name }}</span>
+          <FormGroup type="toggle" v-model="feed.subscribed" />
         </div>
       </template>
 
@@ -89,17 +101,24 @@
       title="Add Feed"
     >
       <template v-slot:body>
-        <FormGroup type="text" v-model="newFeedUrl" class="my-2" style="width: 25rem;" label="Insert WebID" placeholder="Insert url" />
+        <FormGroup
+          type="text"
+          v-model="newFeedUrl"
+          class="my-2"
+          style="width: 25rem"
+          label="Insert WebID"
+          placeholder="Insert url"
+        />
         <button
           class="btn btn-primary"
           @click="getUserFeeds({ url: newFeedUrl })"
           :disabled="isLoadingFeeds"
         >
-         <img
-          v-if="isLoadingFeeds"
-          src="@/assets/img/loader.svg"
-          class="animate-spin mr-2"
-        />
+          <img
+            v-if="isLoadingFeeds"
+            src="@/assets/img/loader.svg"
+            class="animate-spin mr-2"
+          />
           Load Feeds
         </button>
 
@@ -108,7 +127,8 @@
           :key="feed.url"
           class="flex flex-row items-center justify-between hover:bg-primary-100 p-2 rounded-md"
         >
-          <span class="mr-4">{{ feed.name }}</span> <FormGroup type="toggle" v-model="feed.subscribed" />
+          <span class="mr-4">{{ feed.name }}</span>
+          <FormGroup type="toggle" v-model="feed.subscribed" />
         </div>
       </template>
 
@@ -134,7 +154,7 @@ import Sidebar from "../components/Sidebar";
 import Modal from "../components/Modal";
 import FormGroup from "../components/FormGroup";
 
-import Vue from 'vue';
+import Vue from "vue";
 
 const $rdf = require("rdflib");
 const FOAF = $rdf.Namespace("http://xmlns.com/foaf/0.1/");
@@ -155,9 +175,8 @@ export default {
     userFeeds: [],
     isSubscribeModalVisible: false,
     newFeedUrl: "",
-    profiles:{},
-    isLoadingFeeds:false,
-    feedsModalTitle:"",
+    isLoadingFeeds: false,
+    feedsModalTitle: "",
   }),
   computed: {
     filteredSubscriptions() {
@@ -178,21 +197,22 @@ export default {
       return this.$store.state.ibex;
     },
     settings() {
-
-      if(typeof this.$store.state.settings.subscriptions === 'undefined' ){
+      if (typeof this.$store.state.settings.subscriptions === "undefined") {
         this.$store.state.settings.subscriptions = {};
       }
 
       return this.$store.state.settings || {};
     },
+    profiles(){
+      return this.$store.state.usersCache;
+    }
   },
   methods: {
     goToUser(user) {
-      console.log(user)
       this.$store.commit("setSelectedUser", user);
       this.$router.push("/user");
     },
-   
+
     getUserFeeds(user, destination) {
       this.isLoadingFeeds = true;
       // Clear previously loaded feeds
@@ -205,7 +225,6 @@ export default {
         .then((res) => res.json())
         .then((feeds) => {
           for (const key in feeds) {
-
             let subscribed = false;
 
             if (typeof this.settings.subscriptions[user.url] !== "undefined") {
@@ -218,27 +237,28 @@ export default {
               }
             }
 
-            if(typeof this.profiles[user.url] !== 'undefined'){
+            if (typeof this.profiles[user.url] !== "undefined") {
+              //console.log(this.profiles[user.url]);
 
-              console.log(this.profiles[user.url]);
-
-              if(typeof this.profiles[user.url].name !== 'undefined')
-                this.feedsModalTitle = this.profiles[user.url].name+' Feeds';
-              else
-                this.feedsModalTitle = user.url+" Feeds";
-                
-            }else{
-              this.feedsModalTitle = user.url+" Feeds";
+              if (typeof this.profiles[user.url].name !== "undefined")
+                this.feedsModalTitle = this.profiles[user.url].name + " Feeds";
+              else this.feedsModalTitle = user.url + " Feeds";
+            } else {
+              this.feedsModalTitle = user.url + " Feeds";
             }
 
             this.userFeeds.push({
               url: key,
-              name: user.name || key
-                .split("/")
-                .filter((el) => {
-                  return el != null && el != "";
-                })
-                .pop(),
+              name:
+                user.name ||
+                decodeURIComponent(
+                  key
+                    .split("/")
+                    .filter((el) => {
+                      return el != null && el != "";
+                    })
+                    .pop()
+                ),
               subscribed,
             });
           }
@@ -310,23 +330,21 @@ export default {
         .then((res) => {
           //After save confirmation we can add the new settings to the store
           this.$store.commit("setSettings", res);
-          
 
           //If the user is subscribing for the first time
-          if(this.isSubscribeModalVisible){
+          if (this.isSubscribeModalVisible) {
             //close the modal
             this.isSubscribeModalVisible = false;
           }
 
           //If the user is editing the subscriptions
-          if(this.isSubscribeModalVisible){
+          if (this.isSubscribeModalVisible) {
             //close the modal
             this.isFeedsModalVisible = false;
           }
 
           //Reload the settings
           Vue.checkSettings();
-          
         })
         .catch((err) => console.log(err));
     },
@@ -343,25 +361,33 @@ export default {
         url: url,
       };
     },
+
+    async copyWebID() {
+      if (!navigator.clipboard) {
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(this.ibex.myHost);
+      } catch (error) {
+        console.error("copy failed", error);
+      }
+    },
   },
   async created() {
     const gotSession = await Vue.checkSession();
 
     if (gotSession) {
-
       const gotSettings = await Vue.checkSettings();
-      if(gotSettings){
-
-        if(typeof this.settings.subscriptions !== 'undefined'){
-          for(let sub in this.settings.subscriptions){
+      if (gotSettings) {
+        if (typeof this.settings.subscriptions !== "undefined") {
+          for (let sub in this.settings.subscriptions) {
             const profile = await Vue.getUserProfile(sub);
-            console.log(sub)
-            this.profiles[sub] = profile;
+            this.$store.commit('addUserToCache',profile);
           }
+          this.$forceUpdate();
         }
-
       }
-
     }
   },
 };

@@ -44,7 +44,7 @@ export default {
         url: "/feed",
       },
       {
-        name: "Users",
+        name: "Following",
         icon: "users.svg",
         url: "/following",
       },
