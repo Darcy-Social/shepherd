@@ -18,18 +18,19 @@
       <div
       v-if="type!='toggle'" 
       class="input-group border shadow-sm flex flex-row  bg-white dark-mode:bg-transparent " 
-      :class="{'px-2 py-1':(type!='color'),borderClass,'rounded-full':type!='textarea','rounded-md':type=='textarea'}"
+      :class="{'px-2 py-1':(type!='color'),'rounded-full':type!='textarea','rounded-md':type=='textarea',[borderClass]:1==1}"
       :style="{backgroundColor:(type=='color'?value:'')}"
       >
             <input 
                 @input="$emit('input', $event.target.value)"
                 v-if="type=='text'||type=='password'||type=='file'" class="block w-full dark-mode:bg-transparent" 
-                :type="type" 
+                :type="trueType" 
                 :name="name" 
                 :id="id" 
                 :placeholder="placeholder"
                 :value="value"
             />
+            <a v-if="type=='password'" class="ml-2" @click="passwordIsVisible=!passwordIsVisible"><img :src="showPasswordIcon"/></a>
 
                   <input 
                     v-if="type=='color'"
@@ -67,7 +68,7 @@
 
       
 
-       <div class="text-danger-500 flex flex-row items-center mt-1" v-if="Object.keys(this.fieldError).length !== 0">
+       <div class="text-danger-500 flex flex-row items-center mt-1 text-red-600" v-if="Object.keys(this.fieldError).length !== 0">
           <span v-html="fieldError.message"></span>
       </div>
 
@@ -81,6 +82,7 @@ export default {
   name: 'FormGroup',
 
   data: () => ({
+    passwordIsVisible:false,
   }),
   props: {
 
@@ -123,13 +125,29 @@ export default {
       return this.errors.find(el => el.field === this.name) || {}
     },
     statusClass () {
-      if (Object.keys(this.fieldError).length !== 0) { return 'danger' } else { return this.status }
+      if (Object.keys(this.fieldError).length !== 0) { return 'red' } else { return this.status }
     },
     borderClass(){
       return 'border-'+this.statusClass+'-500'
     },
     sliderValue(){
       return 0;
+    },
+    trueType(){
+      if(this.type!='password'){
+        return this.type;
+      }else{
+        if(this.passwordIsVisible)
+          return 'text';
+        else
+          return 'password';
+      }
+    },
+    showPasswordIcon(){
+      if(this.passwordIsVisible)
+        return require('@/assets/img/eye-off.svg');
+      else
+        return require('@/assets/img/eye.svg');
     }
   },
   methods:{

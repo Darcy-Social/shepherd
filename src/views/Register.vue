@@ -18,18 +18,14 @@
       </div>
     </div>
     <div
-      class="w-1/2 skewed text-white text-center flex flex-col justify-center items-center"
-      :style="{backgroundImage:'url('+require('@/assets/img/skewed-r.svg')+')'}"
+      class="w-1/2 bg-primary-500 text-white text-center flex flex-col justify-center items-center"
     >
       <img src="@/assets/img/logo-bubble-w.svg" class="w-1/4" alt="Darcy comment bubble logo" />
       <h1 class="w-2/3 mt-3">
         Enter your details
         to create an account
-        on our server
-        <br />
-        <small class="text-sm font-light">
-          <i>what does this mean?</i>
-        </small>
+        on our<br/>Solid Pod provider
+        
       </h1>
     </div>
   </div>
@@ -64,11 +60,30 @@ export default {
       if(!this.name.length)
         this.errors.push({field:"name",message:"Please fill out this field"})
 
-      if(!/^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).{10,}$/.test(this.password))
-        this.errors.push({field:"password",message:`The password must be at least 10 characters long.<br>
-        The password must contain at least one uppercase letter.<br>
-        The password must contain at least one number.<br>
-        The password must contain at least one special character`})
+      //if(!/^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).{10,}$/.test(this.password)){
+
+        let passwordErrors = [];
+
+        if(this.password.length<10){
+          passwordErrors.push("The password must be at least 10 characters long.")
+        }
+
+        if(!/\w*[A-Z]\w*[a-z]\w*/.test(this.password))
+          passwordErrors.push("The password must contain at least 1 uppercase and 1 lowecase character.")
+
+        if(!/\w*[0-9]\w*/.test(this.password))
+          passwordErrors.push("The password must contain at least 1 number.")
+
+        if(!/\w*[!?@#$&*]\w*/.test(this.password))
+          passwordErrors.push("The password must contain at least 1 special character (!,?,@,#,$,&,*).")
+
+        if(passwordErrors.length){
+
+          this.errors.push({field:"password",message:passwordErrors.join("<br/>")})
+
+        }
+
+      //}
 
       if(this.passwordConfirm != this.password )
         this.errors.push({field:"passwordConfirm",message:"Passwords don't mach"})
@@ -148,11 +163,7 @@ export default {
 
 <style scoped>
 .login > div {
-  height: 100vh;
+  min-height: 100vh;
 }
-.skewed {
-  background-repeat: no-repeat;
-  background-size: cover;
-  padding-left: 10%;
-}
+
 </style>
