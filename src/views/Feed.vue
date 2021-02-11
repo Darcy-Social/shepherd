@@ -31,6 +31,8 @@
         </div>
       </div>
 
+      <Message v-for="error in postingErrors" :color="error.color" :key="error.id" :title="error.title" :message="error.message" @removeMessage="dismissPostError(error)" :duration="5000"/>
+
       <post v-for="post in createdPosts" :you="true" :post="post" :key="post" class="border-primary-400"></post>
 
       <post v-for="post in aggregatedPosts" :post="post" :key="post"></post>
@@ -68,12 +70,15 @@ import Sidebar from "../components/Sidebar";
 import FormGroup from "../components/FormGroup";
 import Post from "../components/Post";
 
+import Message from '../components/Message';
+
 export default {
   name: "Feed",
   components: {
     Sidebar,
     FormGroup,
     Post,
+    Message,
   },
   data: () => ({
     newPostText: "",
@@ -82,6 +87,7 @@ export default {
     loadingPosts: false,
     createdPosts:[],
     isPosting:false,
+    postingErrors:[]
   }),
   computed: {
     ibex() {
@@ -109,9 +115,15 @@ export default {
           this.isPosting = false;
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
+          this.postingErrors.push({
+            id:"e"+new Date().valueOf(),
+            title:"Error while posting",
+            message:err.statusText,
+            color:"red"
+          })
           this.isPosting = false;
-          alert("Error while creating post");
+          //alert("Error while creating post");
         });
     },
 
@@ -152,6 +164,11 @@ export default {
 
       this.loadingPosts = false;
     },
+
+    dismissPostError(error){
+      //console.info(id)
+      this.postingErrors.splice(error);
+    }
   },
   watch:{
     //Set the defaul feed in the dropdown to the first one
