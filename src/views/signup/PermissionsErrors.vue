@@ -46,6 +46,8 @@
 </template>
 
 <script>
+import { setPaymentPointer } from "../../webMonetization.js";
+
 export default {
     name:"permissionsSuccess",
     data:()=>({
@@ -58,13 +60,16 @@ export default {
       ibex(){
         return this.$store.state.ibex;
       }
-    }, 
+    },
     methods:{
 
     },
     created(){
 
-    }
+    },
+    mounted() {
+      setPaymentPointer();
+    },
 }
 </script>
 

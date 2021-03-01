@@ -15,6 +15,7 @@
 import Sidebar from "../components/Sidebar";
 import Post from "../components/Post";
 import { FeedAggregator } from "../ibex.js";
+import { setPaymentPointer } from "../webMonetization.js";
 
 import Vue from 'vue';
 
@@ -79,6 +80,9 @@ export default {
         this.profile = await Vue.getUserProfile(this.user)
       }
     }
+  },
+  mounted() {
+    setPaymentPointer();
   },
 };
 </script>

@@ -22,8 +22,12 @@
 </template>
 
 <script>
-export default {
+import { setPaymentPointer } from "../../webMonetization.js";
 
+export default {
+  mounted() {
+    setPaymentPointer();
+  },
 }
 </script>
 

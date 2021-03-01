@@ -69,6 +69,7 @@ import Vue from "vue";
 import Sidebar from "../components/Sidebar";
 import FormGroup from "../components/FormGroup";
 import Post from "../components/Post";
+import { setPaymentPointer, webIdToPaymentPointer } from "../webMonetization.js";
 
 import Message from '../components/Message';
 
@@ -153,6 +154,22 @@ export default {
           .catch((err) => console.log(err));
       }
     },
+    setOnePaymentPointer: async function () {
+      try {
+        // See https://webmonetization.org/docs/probabilistic-rev-sharing/
+        const posts = this.aggregator.posts;
+        if (posts.length === 0) {
+          return;
+        }
+        const postUrlToMonetize = posts[Math.floor(Math.random() * posts.length)];
+        const podOriginToMonetize = new URL(postUrlToMonetize).origin;
+        const webId = `${podOriginToMonetize}/profile/card#me`; // FIXME: need the actual webid available here
+        const authorPaymentPointer = await webIdToPaymentPointer(webId);
+        setPaymentPointer(authorPaymentPointer);
+      } catch (e) {
+        console.error(e);
+      }
+    },
     getPosts: async function () {
       this.loadingPosts = true;
 
@@ -163,6 +180,7 @@ export default {
       }
 
       this.loadingPosts = false;
+      this.setOnePaymentPointer();
     },
 
     dismissPostError(error){

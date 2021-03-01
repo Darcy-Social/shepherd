@@ -504,6 +504,7 @@ class FeedLoader {
                         // delve deeper
                         try {
                             await folderLister(aFile);
+                        // eslint-disable-next-line no-empty
                         } catch { }
                     } else {
                         postsToList--;

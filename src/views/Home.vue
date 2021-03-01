@@ -24,6 +24,7 @@
 
 <script>
 const auth = require("solid-auth-client");
+import { setPaymentPointer } from "../webMonetization.js";
 
 export default {
   name: "home",
@@ -84,7 +85,10 @@ export default {
   created(){
     //on creation check if the session exists
     this.checkSession();
-  }
+  },
+  mounted() {
+    setPaymentPointer();
+  },
 };
 </script>
 

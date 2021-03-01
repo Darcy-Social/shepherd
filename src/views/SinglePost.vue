@@ -27,6 +27,7 @@
 <script>
 import Sidebar from "../components/Sidebar";
 import Vue from 'vue';
+import { setPaymentPointer, webIdToPaymentPointer } from "../webMonetization.js";
 
 export default {
   name: "SinglePostView",
@@ -86,7 +87,12 @@ export default {
 
       const profile = await Vue.getUserProfile(this.post);
       this.user = profile;
-  }
+  },
+  async mounted() {
+    const webId = `${this.feedData.pod}/profile/card#me`; // FIXME: need the actual webid available here
+    const authorPaymentPointer = await webIdToPaymentPointer(webId);
+    setPaymentPointer(authorPaymentPointer);
+  },
 };
 </script>
 

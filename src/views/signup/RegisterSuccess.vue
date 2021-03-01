@@ -23,6 +23,7 @@
 <script>
 
 const auth = require("solid-auth-client");
+import { setPaymentPointer } from "../../webMonetization.js";
 
 
 export default {
@@ -39,7 +40,10 @@ export default {
         });
       else alert(`Logged in as ${session.webId}`);
     },
-  }
+  },
+  mounted() {
+    setPaymentPointer();
+  },
 };
 </script>
 

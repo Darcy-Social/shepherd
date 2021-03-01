@@ -34,6 +34,7 @@ import Vue from "vue";
 
 import Sidebar from "../components/Sidebar";
 import FormGroup from "../components/FormGroup";
+import { setPaymentPointer } from "../webMonetization.js";
 
 export default {
   name: "Profile",
@@ -71,6 +72,9 @@ export default {
       const profile = await Vue.getUserProfile("own");
       this.profile = profile;
     }
+  },
+  mounted() {
+    setPaymentPointer();
   },
 };
 </script>

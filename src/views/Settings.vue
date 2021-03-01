@@ -109,6 +109,7 @@
 import Sidebar from "../components/Sidebar";
 import Modal from "../components/Modal";
 import FormGroup from "../components/FormGroup";
+import { setPaymentPointer } from "../webMonetization.js";
 
 import Vue from "vue";
 
@@ -188,6 +189,9 @@ export default {
   async created() {
     const gotSession = await Vue.checkSession();
     if (gotSession) this.getPublicFeeds();
+  },
+  mounted() {
+    setPaymentPointer();
   },
 };
 </script>
