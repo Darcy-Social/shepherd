@@ -44,6 +44,10 @@ export async function webIdToPaymentPointer(webId) {
     const objs = await res.json();
     const obj = objs.find(obj => obj['@id'] === webId);
     const paymentPointerLinks = obj['http://paymentpointers.org/ns#PaymentPointer'];
+    if (typeof paymentPointerLinks === 'undefined') {
+      console.warn(`Author ${webId} has no <http://paymentpointers.org/ns#PaymentPointer> configured in their Solid profile`);
+      return null;
+    }
     return paymentPointerLinks[0]['@value'];
   } catch (e) {
     console.error(e);
