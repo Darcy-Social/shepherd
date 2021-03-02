@@ -7,11 +7,20 @@ export default new Vuex.Store({
   state: {
     ibex:{},
     session:{},
+
     settings:{},
     publicFeeds:[],
+
+    //For post single view
     selectedPost:"",
+    //For selected user profile page
     selectedUser:"",
+
+    //"Cache" used to not fetch the user data costantly
     usersCache:{},
+    //"Cache" used to not fetch the feed data constantly
+    feedsCache:{},
+
 
     //onboarding data
     permissionErrors:[],
@@ -60,6 +69,9 @@ export default new Vuex.Store({
     },
     addUserToCache(state,user){
       state.usersCache[user.url] = user;
+    },
+    addFeedToCache(state,feed){
+
     },
 
 

@@ -17,7 +17,7 @@
 
       <div
       v-if="type!='toggle'" 
-      class="input-group border shadow-sm flex flex-row  bg-white dark-mode:bg-transparent " 
+      class="input-group border-2 shadow-sm flex flex-row  bg-white dark-mode:bg-transparent " 
       :class="{'px-2 py-1':(type!='color'),'rounded-full':type!='textarea','rounded-md':type=='textarea',[borderClass]:1==1}"
       :style="{backgroundColor:(type=='color'?value:'')}"
       >
@@ -128,7 +128,7 @@ export default {
       if (Object.keys(this.fieldError).length !== 0) { return 'red' } else { return this.status }
     },
     borderClass(){
-      return 'border-'+this.statusClass+'-500'
+      return 'border-'+this.statusClass+'-700'
     },
     sliderValue(){
       return 0;

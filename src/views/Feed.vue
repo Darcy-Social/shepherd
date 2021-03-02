@@ -33,7 +33,7 @@
 
       <Message v-for="error in postingErrors" :color="error.color" :key="error.id" :title="error.title" :message="error.message" @removeMessage="dismissPostError(error)" :duration="5000"/>
 
-      <post v-for="post in createdPosts" :you="true" :post="post" :key="post" class="border-primary-400"></post>
+      <post v-for="post in createdPosts" @deletePost="deletePost(post)" :you="true" :post="post" :key="post" class="border-primary-400"></post>
 
       <post v-for="post in aggregatedPosts" :post="post" :key="post"></post>
 
@@ -168,6 +168,18 @@ export default {
     dismissPostError(error){
       //console.info(id)
       this.postingErrors.splice(error);
+    },
+
+    deletePost(post){
+      console.info(post);
+      this.ibex.deletePost(post,this.ibex.myHost)
+      .then(res=>{
+        //console.log(res);
+        this.createdPosts = this.createdPosts.filter(el=>el!=post);
+      })
+      .catch(err=>{
+        console.error(err);
+      })
     }
   },
   watch:{
