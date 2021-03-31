@@ -10,29 +10,66 @@
           <FormGroup type="text" v-model="profile.name" label="Shown Name" />
           <FormGroup type="textarea" v-model="profile.bio" label="Bio" />
           <FormGroup
-            type="toggle"
-            v-model="profile.isPublic"
-            label="Public profile"
+          type="toggle"
+          v-model="profile.isPublic"
+          label="Public profile"
           />
 
           <button class="btn btn-primary mt-3" @click="saveProfile()" :disabled="isSaving">
             <img
-              src="@/assets/img/loader.svg"
-              class="animate-spin mr-1"
-              v-if="isSaving"
+            src="@/assets/img/loader.svg"
+            class="animate-spin mr-1"
+            v-if="isSaving"
             />
             {{(isSaving)?' Saving':' Save'}}
           </button>
+        </div>
+
+        <div  class="w-1/2" v-if="podProfile.name != null">
+          <button class="btn btn-primary mt-3" @click="grabProfile()" :disabled="isSaving">
+            Grab your pod profile
+          </button>
+
+          <figure class="bg-gray-100 rounded-xl p-8">
+            <img class="w-32 h-32 rounded-full mx-auto" :src="podProfile.photo" alt="" width="384" height="512">
+            <div class="pt-6 space-y-4">
+
+              <figcaption class="font-medium">
+                <div class="text">
+                  {{podProfile.name}}
+                </div>
+                <div>
+                  {{podProfile.role}} <span v-if="podProfile.organization.length > 0"> at </span>{{podProfile.organization}}
+                </div>
+              </figcaption>
+              <blockquote>
+                <p class="text-lg font-semibold">
+                  “{{podProfile.note}}”
+                </p>
+              </blockquote>
+              <div class="text" v-if="podProfile.friends.length > 0">
+                Friends :
+                <ul>
+                  <li v-for="f of podProfile.friends" :key="f">
+                    {{ f }}
+                  </li>
+                </ul>
+
+              </div>
+            </div>
+          </figure>
+          <!-- {{ podProfile}} -->
+
         </div>
       </div>
 
       <h2 class="mt-2">Your Posts</h2>
 
       <img
-          src="@/assets/img/loader.svg"
-          class="animate-spin mx-auto"
-          v-if="loadingPosts"
-        />
+      src="@/assets/img/loader.svg"
+      class="animate-spin mx-auto"
+      v-if="loadingPosts"
+      />
 
       <post v-for="post in aggregatedPosts" :you="true" @deletePost="deletePost(post)" :post="post" :key="post"></post>
     </main>
@@ -62,6 +99,7 @@ export default {
       bio: "",
       isPublic: true,
     },
+    podProfile: {},
     isSaving: false,
     loadingPosts:false,
   }),
@@ -83,27 +121,27 @@ export default {
       this.isSaving = true;
 
       this.$store.state.ibex
-        .saveProfile(this.profile)
-        .then((res) => {
-          this.isSaving = false;
-        })
-        .catch((err) => {
-          console.error(err);
-          this.isSaving = false;
-        });
+      .saveProfile(this.profile)
+      .then((res) => {
+        this.isSaving = false;
+      })
+      .catch((err) => {
+        console.error(err);
+        this.isSaving = false;
+      });
     },
 
     //Get the user's own feeds (if not loaded)
     getOwnFeeds(){
-     
-     if (!this.publicFeeds.length) {
+
+      if (!this.publicFeeds.length) {
         this.ibex
-          .manifest()
-          .then((res) => {
-            this.$store.commit("setPublicFeeds", res);
-            this.getOwnPosts();
-          })
-          .catch((err) => console.log(err));
+        .manifest()
+        .then((res) => {
+          this.$store.commit("setPublicFeeds", res);
+          this.getOwnPosts();
+        })
+        .catch((err) => console.log(err));
       }else{
         this.getOwnPosts();
       }
@@ -131,7 +169,7 @@ export default {
 
     //Delete the user's own post
     deletePost(post){
-      
+
       this.ibex.deletePost(post,this.ibex.myHost)
       .then(res=>{
         //console.log(res);
@@ -141,6 +179,13 @@ export default {
         console.error(err);
       })
 
+    },
+    grabProfile(){
+      this.profile.name = this.podProfile.name
+      this.profile.bio = this.podProfile.note
+      this.profile.photo = this.podProfile.photo
+      this.profile.friends = this.podProfile.friends
+      ///... and so on for other properties
     }
 
   },
@@ -150,6 +195,8 @@ export default {
     if (gotSession) {
       const profile = await Vue.getUserProfile("own");
       this.profile = profile;
+      this.podProfile = await Vue.getPodProfile()
+      console.log(this.podProfile)
 
       this.getOwnFeeds();
 
