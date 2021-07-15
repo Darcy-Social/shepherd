@@ -42,7 +42,7 @@
 <script>
 import Vue from "vue";
 
-import { Ibex, FeedAggregator } from "../ibex.js";
+const {Ibex, FeedAggregator} = require("ibex-lib")
 
 import Sidebar from "../components/Sidebar";
 import FormGroup from "../components/FormGroup";

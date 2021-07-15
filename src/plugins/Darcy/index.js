@@ -1,6 +1,6 @@
 const auth = require("solid-auth-client");
 
-import { Ibex } from '../../ibex';
+const {Ibex} = require("ibex-lib")
 
 import store from '../../store';
 import router from '../../router';

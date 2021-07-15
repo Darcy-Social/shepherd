@@ -62,7 +62,7 @@
 <script>
 const auth = require("solid-auth-client");
 
-import { Ibex, FeedAggregator } from "../ibex.js";
+const {Ibex, FeedAggregator} = require("ibex-lib")
 
 import Vue from "vue";
 

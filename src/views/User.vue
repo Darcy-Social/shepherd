@@ -14,7 +14,7 @@
 <script>
 import Sidebar from "../components/Sidebar";
 import Post from "../components/Post";
-import { FeedAggregator } from "../ibex.js";
+const {Ibex, FeedAggregator} = require("ibex-lib")
 
 import Vue from 'vue';
 
