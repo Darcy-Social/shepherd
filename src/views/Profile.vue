@@ -29,37 +29,6 @@
           <button class="btn btn-primary mt-3" @click="grabProfile()" :disabled="isSaving">
             Grab your pod profile
           </button>
-
-          <figure class="bg-gray-100 rounded-xl p-8">
-            <img class="w-32 h-32 rounded-full mx-auto" :src="podProfile.photo" alt="" width="384" height="512">
-            <div class="pt-6 space-y-4">
-
-              <figcaption class="font-medium">
-                <div class="text">
-                  {{podProfile.name}}
-                </div>
-                <div>
-                  {{podProfile.role}} <span v-if="podProfile.organization.length > 0"> at </span>{{podProfile.organization}}
-                </div>
-              </figcaption>
-              <blockquote>
-                <p class="text-lg font-semibold">
-                  “{{podProfile.note}}”
-                </p>
-              </blockquote>
-              <div class="text" v-if="podProfile.friends.length > 0">
-                Friends :
-                <ul>
-                  <li v-for="f of podProfile.friends" :key="f">
-                    {{ f }}
-                  </li>
-                </ul>
-
-              </div>
-            </div>
-          </figure>
-          <!-- {{ podProfile}} -->
-
         </div>
       </div>
 
