@@ -13,12 +13,7 @@ npm install
 ### The Ibex library
 You can find the Ibex library in the [ibex-lib repository](https://github.com/Darcy-Social/ibex-lib)
 
-The library needs to be included in the ibex.js file, to import a newer version follow these steps:
-
-- Copy the classes from the file, leaving the imports in place
-- Replace solid.auth with auth
-
-This needs to be done until ibex-lib can be made into an npm package.
+The library is included in the package.json and installed as an npm module.
 
 ### Development server
 
