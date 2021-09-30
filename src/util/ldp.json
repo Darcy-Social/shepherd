@@ -1,0 +1,46 @@
+{
+  "@context": {
+    "name": "http://xmlns.com/foaf/0.1/name",
+    "vcardFn": "http://www.w3.org/2006/vcard/ns#fn",
+    "friends": "foaf:knows",
+    "organization": "http://www.w3.org/2006/vcard/ns#organization-name",
+    "role": "http://www.w3.org/2006/vcard/ns#role",
+    "storage": "http://www.w3.org/ns/pim/space#storage",
+    "memberOf": "http://www.w3.org/ns/org#memberOf",
+    "inbox": "ldp:inbox",
+    "photo": "http://www.w3.org/2006/vcard/ns#hasPhoto",
+    "note": "http://www.w3.org/2006/vcard/ns#note",
+
+    "id": "@id",
+    "graph": "@graph",
+    "rdf":     "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs":    "http://www.w3.org/2000/01/rdf-schema#",
+    "owl":     "http://www.w3.org/2002/07/owl#",
+    "ldp":     "http://www.w3.org/ns/ldp#",
+    "xsd":     "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "foaf":    "http://xmlns.com/foaf/0.1/",
+    "wdrs":    "http://www.w3.org/2007/05/powder-s#",
+    "vs":      "http://www.w3.org/2003/06/sw-vocab-status/ns#",
+    "bt":      "http://example.org/vocab/bugtracker#",
+
+    "contains": { "@id": "ldp:contains", "@type": "@id" },
+    "hasMemberRelation": { "@id": "ldp:hasMemberRelation", "@type": "@id" },
+    "insertedContentRelation": { "@id": "ldp:insertedContentRelation", "@type": "@id" },
+    "isMemberOfRelation": { "@id": "ldp:isMemberOfRelation", "@type": "@id" },
+    "member": { "@id": "ldp:member", "@type": "@id" },
+    "membershipResource": { "@id": "ldp:membershipResource", "@type": "@id" },
+
+    "rdfs:domain": { "@type": "@id" },
+    "rdfs:range": { "@type": "@id" },
+    "rdfs:subClassOf": { "@type": "@id" },
+    "rdfs:subPropertyOf": { "@type": "@id" },
+
+    "owl:equivalentClass": { "@type": "@vocab" },
+    "owl:equivalentProperty": { "@type": "@vocab" },
+    "owl:imports": { "@type": "@id" },
+    "owl:inverseOf": { "@type": "@vocab" },
+    "owl:oneOf": { "@type": "@vocab", "@container": "@list" },
+    "owl:versionInfo": { "@type": "xsd:string", "@language": null }
+  }
+}
