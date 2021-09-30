@@ -15,7 +15,7 @@ export default {
             let session = await auth.currentSession();
 
             if (session) {
-                //set the ibex and session object in the store 
+                //set the ibex and session object in the store
                 store.commit("setIbex", new Ibex(session.webId));
                 store.commit("setSession", session);
                 //return true to allow further operations depending on the ibex istance
@@ -31,7 +31,7 @@ export default {
         Vue.checkSettings = async function () {
             //Get the contentent of the settings.json file
             const settings = await store.state.ibex.loadSettings()
-            
+
             if(Object.keys(settings).length){
                 //If content.json is not empty
                 store.commit("setSettings",settings);
@@ -45,7 +45,7 @@ export default {
         }
 
         Vue.getUserProfile = async function (url){
-           
+
             let toFetch = false;
 
             if(url=='own'){
@@ -68,7 +68,7 @@ export default {
                 if(toFetch){
                     //get the user profile data
                     const urlDomain = store.state.ibex.urlDomain(url);
-                   
+
                     const response = await store.state.ibex.willFetch(urlDomain + "/is.darcy/profile.json");
                     const profile = await response.json();
 
@@ -83,6 +83,14 @@ export default {
                 }
             }
 
+        }
+
+        Vue.getPodProfile = async function(){
+          let webId = store.state.session.webId
+          console.log("webId", webId)
+          let p = await store.state.ibex.podProfile(webId)
+          console.log(p)
+          return p
         }
 
         Vue.getFeedData = async function(url){
@@ -101,4 +109,3 @@ export default {
 
     }
 }
-
